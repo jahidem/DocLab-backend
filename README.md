@@ -16,3 +16,4 @@ related to a doctor with `doc_id` in Json format.
 * GET request to `/doctor/{id}` gives info of the doctor
   having the `id` in Json format.
 
+* POST request to `/doctor` with body {"doctorName" : "Example name"} adds new doctor to the database with the given `doctotName`.
