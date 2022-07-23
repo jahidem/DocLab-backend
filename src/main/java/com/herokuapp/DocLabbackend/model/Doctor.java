@@ -12,6 +12,16 @@ public class Doctor {
     @Column(name = "DOCTOR_NAME")
     private String doctorName;
 
+
+
+    @Column(name = "DOCTOR_DISTRICT")
+    private String doctorDistrict;
+
+
+
+    @Column(name = "DOCTOR_SPECIALITY")
+    private String doctorSpeciality;
+
     public Doctor() {
     }
 
@@ -34,5 +44,20 @@ public class Doctor {
 
     public void setDoctorName(String doctorName) {
         this.doctorName = doctorName;
+    }
+
+    public String getDoctorDistrict() {
+        return doctorDistrict;
+    }
+
+    public void setDoctorDistrict(String doctorDistrict) {
+        this.doctorDistrict = doctorDistrict;
+    }
+    public String getDoctorSpeciality() {
+        return doctorSpeciality;
+    }
+
+    public void setDoctorSpeciality(String doctorSpeciality) {
+        this.doctorSpeciality = doctorSpeciality;
     }
 }
