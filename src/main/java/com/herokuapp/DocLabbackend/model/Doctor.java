@@ -1,12 +1,13 @@
 package com.herokuapp.DocLabbackend.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "DOCTOR")
 public class Doctor {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer doctorID;
 
     @Column(name = "DOCTOR_NAME")
@@ -60,4 +61,6 @@ public class Doctor {
     public void setDoctorSpeciality(String doctorSpeciality) {
         this.doctorSpeciality = doctorSpeciality;
     }
+
+
 }
