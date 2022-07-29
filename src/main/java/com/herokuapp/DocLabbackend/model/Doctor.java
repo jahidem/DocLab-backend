@@ -1,9 +1,7 @@
 package com.herokuapp.DocLabbackend.model;
 
 import javax.persistence.*;
-import java.net.Inet4Address;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,6 +28,22 @@ public class Doctor {
 
     @ManyToMany(mappedBy = "doctorSet")
     private Set<Degree> doctorDegrees = new HashSet<>();
+
+    @OneToOne
+    @JoinTable(
+            name = "appUser_doctor",
+            joinColumns = @JoinColumn(name="user_doctor"),
+            inverseJoinColumns =@JoinColumn(name = "app_user")
+    )
+    AppUser appUserDoctor;
+
+    public AppUser getAppUserDoctor() {
+        return appUserDoctor;
+    }
+
+    public void setAppUserDoctor(AppUser appUserDoctor) {
+        this.appUserDoctor = appUserDoctor;
+    }
 
     public Set<Degree> getDoctorDegrees() {
         return doctorDegrees;

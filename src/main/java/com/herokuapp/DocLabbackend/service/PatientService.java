@@ -19,4 +19,8 @@ public class PatientService {
     public List<Patient> getAllPatient (){
         return  patientRepository.findAll();
     }
+
+    public  Patient getPatient(Integer patientId){
+        return patientRepository.findById(patientId).get();
+    }
 }

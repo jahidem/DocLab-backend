@@ -33,6 +33,6 @@ public class PatientController {
     @CrossOrigin
     @GetMapping("/{id}")
     public Patient getPatient(@PathVariable("id") Integer patientId){
-        
+        return patientService.getPatient(patientId);
     }
 }
