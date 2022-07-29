@@ -13,6 +13,7 @@ public class Appointment {
     private Integer appointmentId;
 
 
+
     private String appointmentLabLocation;
 
     private Boolean appointmentAccepted;

@@ -28,16 +28,16 @@ public class Doctor {
     @Column(name = "DOCTOR_VISITING_FEE")
     private Integer doctorVisitingFee;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
-    @JoinTable(name = "doctor_degrees",
-            joinColumns = { @JoinColumn(name = "doctorId") },
-            inverseJoinColumns = { @JoinColumn(name = "degreeId") })
-    private Set<Degree> degrees = new HashSet<>();
+    @ManyToMany(mappedBy = "doctorSet")
+    private Set<Degree> doctorDegrees = new HashSet<>();
 
+    public Set<Degree> getDoctorDegrees() {
+        return doctorDegrees;
+    }
+
+    public void setDoctorDegrees(Set<Degree> doctorDegrees) {
+        this.doctorDegrees = doctorDegrees;
+    }
 
     public String getDoctorGender() {
         return doctorGender;
