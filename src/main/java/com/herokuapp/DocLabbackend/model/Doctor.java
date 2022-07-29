@@ -2,6 +2,7 @@ package com.herokuapp.DocLabbackend.model;
 
 import javax.persistence.*;
 import java.net.Inet4Address;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -27,7 +28,15 @@ public class Doctor {
     @Column(name = "DOCTOR_VISITING_FEE")
     private Integer doctorVisitingFee;
 
-
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "doctor_degrees",
+            joinColumns = { @JoinColumn(name = "doctorId") },
+            inverseJoinColumns = { @JoinColumn(name = "degreeId") })
+    private Set<Degree> degrees = new HashSet<>();
 
 
     public String getDoctorGender() {
