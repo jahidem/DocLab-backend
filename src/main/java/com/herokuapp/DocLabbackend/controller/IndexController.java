@@ -14,8 +14,6 @@ import java.util.List;
 
 @RestController
 public class IndexController {
-    @Autowired
-    DoctorService doctorService;
 
     @Autowired
     PatientService patientService;
@@ -24,17 +22,6 @@ public class IndexController {
     AppointmentRepository appointmentRepository;
 
 
-    @CrossOrigin
-    @GetMapping(value = "/doctors")
-    public List<Doctor> getAllDoctors(){
-        return doctorService.getAllDoctor();
-    }
-
-    @CrossOrigin
-    @PostMapping(value = "/doctor")
-    public void addDoctor(@RequestBody Doctor doctor){
-        doctorService.createDoctor(doctor);
-    }
 
     @CrossOrigin
     @GetMapping(value = "/patients")
