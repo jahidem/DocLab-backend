@@ -1,4 +1,6 @@
-## DocLab-backend ! <img src="./logo2.png" alt="drawing" width="150"/>
+<img src="./logo2.png" alt="drawing" width="150"/> 
+
+## DocLab-backend ! 
  >The backend API of the webapp DocLab.
 
 #### Descripson:
