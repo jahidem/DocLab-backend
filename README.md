@@ -1,4 +1,4 @@
-## DocLab-backend ![Markdown Logo](./logo2.png)
+## DocLab-backend ! <img src="./logo2.png" alt="drawing" width="150"/>
  >The backend API of the webapp DocLab.
 
 #### Descripson:
