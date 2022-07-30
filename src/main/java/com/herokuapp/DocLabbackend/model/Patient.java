@@ -1,5 +1,7 @@
 package com.herokuapp.DocLabbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -18,20 +20,34 @@ public class Patient {
     @Column(name = "BILL")
     private double patientBill;
 
-    @OneToOne
-    @JoinTable(
-            name = "appUser_patient",
-            joinColumns = @JoinColumn(name="user_patient"),
-            inverseJoinColumns =@JoinColumn(name = "app_user")
-    )
-    AppUser appUserPatient;
 
-    public AppUser getAppUserPatient() {
-        return appUserPatient;
+
+    private String patientEmail;
+    private String patientPassword;
+    private  String token;
+
+    public String getToken() {
+        return token;
     }
 
-    public void setAppUserPatient(AppUser appUserPatient) {
-        this.appUserPatient = appUserPatient;
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getPatientEmail() {
+        return patientEmail;
+    }
+
+    public void setPatientEmail(String patientEmail) {
+        this.patientEmail = patientEmail;
+    }
+
+    public String getPatientPassword() {
+        return patientPassword;
+    }
+
+    public void setPatientPassword(String patientPassword) {
+        this.patientPassword = patientPassword;
     }
 
     public Integer getPatientId() {

@@ -1,5 +1,7 @@
 package com.herokuapp.DocLabbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,20 +31,32 @@ public class Doctor {
     @ManyToMany(mappedBy = "doctorSet")
     private Set<Degree> doctorDegrees = new HashSet<>();
 
-    @OneToOne
-    @JoinTable(
-            name = "appUser_doctor",
-            joinColumns = @JoinColumn(name="user_doctor"),
-            inverseJoinColumns =@JoinColumn(name = "app_user")
-    )
-    AppUser appUserDoctor;
+    private  String doctorEmail;
+    private String doctorPassword;
+    private  String token;
 
-    public AppUser getAppUserDoctor() {
-        return appUserDoctor;
+    public String getToken() {
+        return token;
     }
 
-    public void setAppUserDoctor(AppUser appUserDoctor) {
-        this.appUserDoctor = appUserDoctor;
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getDoctorEmail() {
+        return doctorEmail;
+    }
+
+    public void setDoctorEmail(String doctorEmail) {
+        this.doctorEmail = doctorEmail;
+    }
+
+    public String getDoctorPassword() {
+        return doctorPassword;
+    }
+
+    public void setDoctorPassword(String doctorPassword) {
+        this.doctorPassword = doctorPassword;
     }
 
     public Set<Degree> getDoctorDegrees() {
@@ -109,5 +123,11 @@ public class Doctor {
         this.doctorSpeciality = doctorSpeciality;
     }
 
+    public  void minify(){
+        this.token = null;
+        this.doctorID = null;
+        //this.doctorEmail = null;
+        this.doctorPassword = null;
 
+    }
 }

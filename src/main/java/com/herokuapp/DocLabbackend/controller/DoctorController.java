@@ -6,12 +6,12 @@ import com.herokuapp.DocLabbackend.repository.DegreeRepository;
 import com.herokuapp.DocLabbackend.repository.DoctorRepository;
 import com.herokuapp.DocLabbackend.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Index;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/doctor")
@@ -32,10 +32,10 @@ public class DoctorController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/{token}")
     public ResponseEntity<Doctor> getDoctor(
-            @PathVariable("id") Integer doctorId){
-        return doctorService.findDoctorById(doctorId);
+            @PathVariable("token") String token){
+        return doctorService.findByToken(token);
     }
 
     @CrossOrigin
@@ -66,8 +66,46 @@ public class DoctorController {
 
     }
 
+    @CrossOrigin
+    @PostMapping("/login")
+    public ResponseEntity<String>
+        doctorLogin(@RequestBody EmailPassword emailPassword){
+        if(doctorService.doctorExists(emailPassword.getEmail())
+                .equals(Boolean.FALSE))
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.accepted().body(doctorService
+                .doctorLogin(emailPassword.getEmail(),
+                        emailPassword.getPassword()));
+    }
+
+    @CrossOrigin
+    @PostMapping("/signup")
+    public ResponseEntity<Doctor> doctorSignup(@RequestBody Doctor doctor){
+        return doctorService.doctorSignup(doctor);
+    }
 
 
+}
 
 
+class EmailPassword{
+    private String email;
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
