@@ -1,9 +1,9 @@
 package com.herokuapp.DocLabbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import java.net.Inet4Address;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,16 +28,44 @@ public class Doctor {
     @Column(name = "DOCTOR_VISITING_FEE")
     private Integer doctorVisitingFee;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
-    @JoinTable(name = "doctor_degrees",
-            joinColumns = { @JoinColumn(name = "doctorId") },
-            inverseJoinColumns = { @JoinColumn(name = "degreeId") })
-    private Set<Degree> degrees = new HashSet<>();
+    @ManyToMany(mappedBy = "doctorSet")
+    private Set<Degree> doctorDegrees = new HashSet<>();
 
+    private  String doctorEmail;
+    private String doctorPassword;
+    private  String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getDoctorEmail() {
+        return doctorEmail;
+    }
+
+    public void setDoctorEmail(String doctorEmail) {
+        this.doctorEmail = doctorEmail;
+    }
+
+    public String getDoctorPassword() {
+        return doctorPassword;
+    }
+
+    public void setDoctorPassword(String doctorPassword) {
+        this.doctorPassword = doctorPassword;
+    }
+
+    public Set<Degree> getDoctorDegrees() {
+        return doctorDegrees;
+    }
+
+    public void setDoctorDegrees(Set<Degree> doctorDegrees) {
+        this.doctorDegrees = doctorDegrees;
+    }
 
     public String getDoctorGender() {
         return doctorGender;
@@ -95,5 +123,11 @@ public class Doctor {
         this.doctorSpeciality = doctorSpeciality;
     }
 
+    public  void minify(){
+        this.token = null;
+        //this.doctorID = null;
+        //this.doctorEmail = null;
+        this.doctorPassword = null;
 
+    }
 }

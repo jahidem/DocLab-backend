@@ -3,8 +3,6 @@ package com.herokuapp.DocLabbackend.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.print.Doc;
-import java.util.Set;
 
 @Entity
 @Table(name = "PATIENT")
@@ -22,6 +20,35 @@ public class Patient {
     @Column(name = "BILL")
     private double patientBill;
 
+
+
+    private String patientEmail;
+    private String patientPassword;
+    private  String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getPatientEmail() {
+        return patientEmail;
+    }
+
+    public void setPatientEmail(String patientEmail) {
+        this.patientEmail = patientEmail;
+    }
+
+    public String getPatientPassword() {
+        return patientPassword;
+    }
+
+    public void setPatientPassword(String patientPassword) {
+        this.patientPassword = patientPassword;
+    }
 
     public Integer getPatientId() {
         return patientId;

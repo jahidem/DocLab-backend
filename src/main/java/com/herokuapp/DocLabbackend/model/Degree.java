@@ -18,14 +18,12 @@ public class Degree {
     @Column(name = "NAME")
     private String name;
 
-    @ManyToMany(
-            fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            },
-            mappedBy = "degrees")
+
     @JsonIgnore
+    @ManyToMany
+    @JoinTable(name = "doctor_degrees",
+            joinColumns = @JoinColumn(name = "degree_id"),
+            inverseJoinColumns = @JoinColumn(name = "doctor_id"))
     private Set<Doctor> doctorSet=new HashSet<>();
 
     public Integer getDegreeId() {
@@ -50,5 +48,9 @@ public class Degree {
 
     public void setDoctorSet(Set<Doctor> doctorSet) {
         this.doctorSet = doctorSet;
+    }
+
+    public void addDoctor(Doctor doctor) {
+        doctorSet.add(doctor);
     }
 }
