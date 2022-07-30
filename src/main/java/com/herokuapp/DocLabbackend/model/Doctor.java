@@ -125,7 +125,7 @@ public class Doctor {
 
     public  void minify(){
         this.token = null;
-        this.doctorID = null;
+        //this.doctorID = null;
         //this.doctorEmail = null;
         this.doctorPassword = null;
 
