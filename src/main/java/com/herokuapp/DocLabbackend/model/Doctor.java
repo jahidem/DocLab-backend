@@ -78,7 +78,7 @@ public class Doctor {
     public Integer getDoctorVisitingFee() {
         return doctorVisitingFee;
     }
-
+    public String doctorInfo;
     public void setDoctorVisitingFee(Integer doctorVisitingFee) {
         this.doctorVisitingFee = doctorVisitingFee;
     }
@@ -129,5 +129,13 @@ public class Doctor {
         //this.doctorEmail = null;
         this.doctorPassword = null;
 
+    }
+
+    public String getDoctorInfo() {
+        return doctorInfo;
+    }
+
+    public void setDoctorInfo(String doctorInfo) {
+        this.doctorInfo = doctorInfo;
     }
 }
