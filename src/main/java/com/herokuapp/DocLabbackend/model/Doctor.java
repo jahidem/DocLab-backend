@@ -30,6 +30,16 @@ public class Doctor {
 
     @ManyToMany(mappedBy = "doctorSet")
     private Set<Degree> doctorDegrees = new HashSet<>();
+    public String doctorInfo;
+    public Integer doctorExperience;
+
+    public Integer getDoctorExperience() {
+        return doctorExperience;
+    }
+
+    public void setDoctorExperience(Integer doctorExperience) {
+        this.doctorExperience = doctorExperience;
+    }
 
     private  String doctorEmail;
     private String doctorPassword;
@@ -78,8 +88,8 @@ public class Doctor {
     public Integer getDoctorVisitingFee() {
         return doctorVisitingFee;
     }
-  
-    public String doctorInfo;
+
+
     public void setDoctorVisitingFee(Integer doctorVisitingFee) {
         this.doctorVisitingFee = doctorVisitingFee;
     }
