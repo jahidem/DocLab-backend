@@ -78,6 +78,7 @@ public class Doctor {
     public Integer getDoctorVisitingFee() {
         return doctorVisitingFee;
     }
+    @Lob
     public String doctorInfo;
     public void setDoctorVisitingFee(Integer doctorVisitingFee) {
         this.doctorVisitingFee = doctorVisitingFee;
