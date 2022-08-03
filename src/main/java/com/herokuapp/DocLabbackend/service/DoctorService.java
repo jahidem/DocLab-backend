@@ -1,6 +1,8 @@
 package com.herokuapp.DocLabbackend.service;
 
+import com.herokuapp.DocLabbackend.model.Appointment;
 import com.herokuapp.DocLabbackend.model.Doctor;
+import com.herokuapp.DocLabbackend.repository.AppointmentRepository;
 import com.herokuapp.DocLabbackend.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,13 +10,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
-import javax.print.Doc;
 import java.util.*;
 
 @Service
 public class DoctorService {
     @Autowired
     private DoctorRepository doctorRepository;
+
+    @Autowired
+    private AppointmentRepository appointmentRepository;
 
     public void createDoctor(Doctor doctor){
 
@@ -77,6 +81,19 @@ public class DoctorService {
 
         return  ResponseEntity.ok()
                 .body(doctorRepository.findByTokenEquals(token));
+    }
+
+    public Integer consultationCount(Integer doctorId){
+        List<Appointment> allAppouintmets = appointmentRepository.findByDoctorIdEquals(doctorId);
+        Map<Integer,Integer> mp =new HashMap<Integer,Integer>();
+        Integer uniqueConsultCount = new Integer(0);
+        for (Appointment appointment:allAppouintmets) {
+            if (!mp.containsKey(appointment.getPatientId()) && appointment.getAppointmentAccepted().equals(Boolean.TRUE)){
+                mp.put(appointment.getPatientId(), 1);
+                uniqueConsultCount++;
+            }
+        }
+        return uniqueConsultCount;
     }
 }
 

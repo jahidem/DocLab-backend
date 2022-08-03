@@ -85,6 +85,11 @@ public class DoctorController {
         return doctorService.doctorSignup(doctor);
     }
 
+    @CrossOrigin
+    @GetMapping("/uniqueConsultCount/{id}")
+    public Integer uniqueConsultCount(@PathVariable("id") Integer doctorId){
+        return doctorService.consultationCount(doctorId);
+    }
 
 }
 
