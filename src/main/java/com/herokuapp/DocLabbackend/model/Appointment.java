@@ -16,7 +16,7 @@ public class Appointment {
 
     private String appointmentLabLocation;
 
-    private Boolean appointmentAccepted;
+    private Boolean appointmentAccepted=false;
     private  Integer doctorId;
 
     private Integer patientId;

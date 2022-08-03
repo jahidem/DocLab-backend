@@ -30,8 +30,33 @@ public class Doctor {
 
     @ManyToMany(mappedBy = "doctorSet")
     private Set<Degree> doctorDegrees = new HashSet<>();
+    public float doctorRating;
+    public String doctorClinicName;
     public String doctorInfo;
     public Integer doctorExperience;
+
+    private  String doctorEmail;
+    private String doctorPassword;
+    private  String token;
+
+    private String doctorLocation;
+
+
+    public float getDoctorRating() {
+        return doctorRating;
+    }
+
+    public void setDoctorRating(float doctorRating) {
+        this.doctorRating = doctorRating;
+    }
+
+    public String getDoctorClinicName() {
+        return doctorClinicName;
+    }
+
+    public void setDoctorClinicName(String doctorClinicName) {
+        this.doctorClinicName = doctorClinicName;
+    }
 
     public Integer getDoctorExperience() {
         return doctorExperience;
@@ -41,9 +66,7 @@ public class Doctor {
         this.doctorExperience = doctorExperience;
     }
 
-    private  String doctorEmail;
-    private String doctorPassword;
-    private  String token;
+
 
     public String getToken() {
         return token;
@@ -102,6 +125,13 @@ public class Doctor {
         this.doctorName = doctorName;
     }
 
+    public String getDoctorLcation() {
+        return doctorLocation;
+    }
+
+    public void setDoctorLcation(String doctorLcation) {
+        this.doctorLocation = doctorLcation;
+    }
 
     public Integer getDoctorID() {
         return doctorID;
