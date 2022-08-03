@@ -32,6 +32,7 @@ public class Doctor {
     private Set<Degree> doctorDegrees = new HashSet<>();
     private float doctorRating;
     private String doctorClinicName;
+    @Lob
     private String doctorInfo;
     private Integer doctorExperience;
 
