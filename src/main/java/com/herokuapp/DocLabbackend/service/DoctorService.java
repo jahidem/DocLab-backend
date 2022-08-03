@@ -84,10 +84,10 @@ public class DoctorService {
     }
 
     public Integer consultationCount(Integer doctorId){
-        List<Appointment> allAppouintmets = appointmentRepository.findByDoctorIdEquals(doctorId);
+        List<Appointment> allAppointmets = appointmentRepository.findByDoctorIdEquals(doctorId);
         Map<Integer,Integer> mp =new HashMap<Integer,Integer>();
         Integer uniqueConsultCount = new Integer(0);
-        for (Appointment appointment:allAppouintmets) {
+        for (Appointment appointment:allAppointmets) {
             if (!mp.containsKey(appointment.getPatientId()) && appointment.getAppointmentAccepted().equals(Boolean.TRUE)){
                 mp.put(appointment.getPatientId(), 1);
                 uniqueConsultCount++;
