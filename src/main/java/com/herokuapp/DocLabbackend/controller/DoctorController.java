@@ -8,7 +8,9 @@ import com.herokuapp.DocLabbackend.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -89,6 +91,16 @@ public class DoctorController {
     @GetMapping("/uniqueConsultCount/{id}")
     public Integer uniqueConsultCount(@PathVariable("id") Integer doctorId){
         return doctorService.consultationCount(doctorId);
+    }
+
+    @CrossOrigin
+    @PostMapping("/imageUpload/{id}")
+    Integer uploadDoctorImage(@RequestParam MultipartFile multipartImage
+            , @PathVariable Integer doctorId) throws Exception {
+        Doctor doctor = doctorRepository.findByDoctorIDEquals(doctorId);
+        doctor.setDoctorImage(multipartImage.getBytes());
+
+        return doctorRepository.save(doctor).getDoctorID();
     }
 
 }

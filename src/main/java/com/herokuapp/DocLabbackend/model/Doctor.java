@@ -34,6 +34,8 @@ public class Doctor {
     private String doctorClinicName;
     @Lob
     private String doctorInfo;
+    @Lob
+    private byte[] doctorImage;
     private Integer doctorExperience;
 
     private  String doctorEmail;
@@ -42,6 +44,22 @@ public class Doctor {
 
     private String doctorLocation;
 
+    public byte[] getDoctorImage() {
+        return doctorImage;
+    }
+
+    public void setDoctorImage(byte[] doctorImage) {
+        this.doctorImage = doctorImage;
+    }
+
+
+    public String getDoctorLocation() {
+        return doctorLocation;
+    }
+
+    public void setDoctorLocation(String doctorLocation) {
+        this.doctorLocation = doctorLocation;
+    }
 
     public float getDoctorRating() {
         return doctorRating;
@@ -126,13 +144,7 @@ public class Doctor {
         this.doctorName = doctorName;
     }
 
-    public String getDoctorLcation() {
-        return doctorLocation;
-    }
 
-    public void setDoctorLcation(String doctorLcation) {
-        this.doctorLocation = doctorLcation;
-    }
 
     public Integer getDoctorID() {
         return doctorID;
