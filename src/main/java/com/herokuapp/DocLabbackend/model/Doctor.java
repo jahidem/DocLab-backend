@@ -30,10 +30,10 @@ public class Doctor {
 
     @ManyToMany(mappedBy = "doctorSet")
     private Set<Degree> doctorDegrees = new HashSet<>();
-    public float doctorRating;
-    public String doctorClinicName;
-    public String doctorInfo;
-    public Integer doctorExperience;
+    private float doctorRating;
+    private String doctorClinicName;
+    private String doctorInfo;
+    private Integer doctorExperience;
 
     private  String doctorEmail;
     private String doctorPassword;
