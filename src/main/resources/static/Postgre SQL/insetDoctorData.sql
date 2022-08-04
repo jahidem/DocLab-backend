@@ -1,6 +1,16 @@
-insert into doctor(Doctor_name) values('Remon Khan');
+insert into doctor(Doctor_name,
+                   doctor_clinic_name,
+                   doctor_district,
+                   doctor_email,
+                   doctor_experience,
+                   doctor_gender,
+                   doctor_info,
+                   doctor_location,
+                   doctor_name,
+                   doctor_password,
+                   doctor_speciality,
+                   doctor_visiting_fee
+                    )
+
+ values('Remon Khan');
 select * from doctor;
-SELECT *
-FROM INFORMATION_SCHEMA.COLUMNS
-WHERE table_name = 'doctor'
-AND COLUMN_NAME = 'doctor_rating'

@@ -36,6 +36,8 @@ public class Doctor {
     private String doctorInfo;
     @Lob
     private byte[] doctorImage;
+
+    private Integer doctorConsultencyCount;
     private Integer doctorExperience;
 
     private  String doctorEmail;
@@ -192,5 +194,13 @@ public class Doctor {
 
     public void setDoctorInfo(String doctorInfo) {
         this.doctorInfo = doctorInfo;
+    }
+
+    public Integer getDoctorConsultencyCount() {
+        return doctorConsultencyCount;
+    }
+
+    public void setDoctorConsultencyCount(Integer doctorConsultencyCount) {
+        this.doctorConsultencyCount = doctorConsultencyCount;
     }
 }
