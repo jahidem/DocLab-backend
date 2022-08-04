@@ -32,7 +32,7 @@ public class Doctor {
     private Set<Degree> doctorDegrees = new HashSet<>();
     private Float doctorRating;
     private String doctorClinicName;
-    @Lob
+
     private String doctorInfo;
     @Lob
     private byte[] doctorImage;
