@@ -203,4 +203,5 @@ public class Doctor {
     public void setDoctorConsultencyCount(Integer doctorConsultencyCount) {
         this.doctorConsultencyCount = doctorConsultencyCount;
     }
+
 }

@@ -2,6 +2,7 @@ package com.herokuapp.DocLabbackend.controller;
 
 import com.herokuapp.DocLabbackend.model.Degree;
 import com.herokuapp.DocLabbackend.model.Doctor;
+import com.herokuapp.DocLabbackend.repository.AppointmentRepository;
 import com.herokuapp.DocLabbackend.repository.DegreeRepository;
 import com.herokuapp.DocLabbackend.repository.DoctorRepository;
 import com.herokuapp.DocLabbackend.service.DoctorService;
@@ -62,6 +63,8 @@ public class DoctorController {
     ){
         Degree degree = degreeRepository.findById(degreeId).get();
         Doctor doctor = doctorRepository.findById(doctorId).get();
+
+
 
         degree.addDoctor(doctor);
         return degreeRepository.save(degree);

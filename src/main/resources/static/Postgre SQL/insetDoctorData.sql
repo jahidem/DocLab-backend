@@ -113,10 +113,10 @@ insert into doctor(doctor_name,
                     );
 
 
-select * from doctor;
+select * from appointment;
 
 -- see deatail about a particular column
 SELECT *
 FROM INFORMATION_SCHEMA.COLUMNS
-WHERE table_name = 'doctor'
-AND COLUMN_NAME = 'doctor_consultency_count'
+WHERE table_name = 'appointment'
+AND COLUMN_NAME = 'doctor_id'
