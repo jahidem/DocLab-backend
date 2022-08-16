@@ -70,7 +70,7 @@ public class DoctorController {
         return degreeRepository.save(degree);
 
     }
-
+    
     @CrossOrigin
     @PostMapping("/login")
     public ResponseEntity<String>
@@ -86,8 +86,13 @@ public class DoctorController {
 
     @CrossOrigin
     @PostMapping("/signup")
-    public ResponseEntity<Doctor> doctorSignup(@RequestBody Doctor doctor){
-        return doctorService.doctorSignup(doctor);
+    public ResponseEntity<String> doctorSignup(@RequestBody Doctor doctor){
+        return 
+        ResponseEntity.accepted().body(doctorService
+                .doctorLogin(doctorService.doctorSignup(doctor).getBody().getDoctorEmail(),
+                doctorService.doctorSignup(doctor).getBody().getDoctorPassword()
+            ));
+        
     }
 
     @CrossOrigin
