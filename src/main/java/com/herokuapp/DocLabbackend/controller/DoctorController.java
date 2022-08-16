@@ -79,8 +79,8 @@ public class DoctorController {
         if(doctorService.doctorExists(emailPassword.getEmail())
                 .equals(Boolean.FALSE))
             return ResponseEntity.notFound().build();
-        if(doctorRepository.findByDoctorEmailEquals(emailPassword.getEmail())
-            .getDoctorPassword()!=(emailPassword.getPassword()))
+        if(!doctorRepository.findByDoctorEmailEquals(emailPassword.getEmail())
+            .getDoctorPassword().equals(emailPassword.getPassword()))
             return ResponseEntity.notFound().build();
         return ResponseEntity.accepted().body(doctorService
                 .doctorLogin(emailPassword.getEmail(),
