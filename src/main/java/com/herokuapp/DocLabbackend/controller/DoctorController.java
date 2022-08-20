@@ -1,7 +1,7 @@
 package com.herokuapp.DocLabbackend.controller;
 
 import com.herokuapp.DocLabbackend.model.Degree;
-import com.herokuapp.DocLabbackend.model.Doctor;
+import com.herokuapp.DocLabbackend.model.Doctor;co
 import com.herokuapp.DocLabbackend.repository.DegreeRepository;
 import com.herokuapp.DocLabbackend.repository.DoctorRepository;
 import com.herokuapp.DocLabbackend.service.DoctorService;
@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
+import java.util.HashSet;
 import java.util.List;
 
 @RestController
@@ -21,6 +23,7 @@ public class DoctorController {
     @Autowired
     DoctorRepository doctorRepository;
 
+    
     @Autowired
     DegreeRepository degreeRepository;
 
@@ -66,7 +69,7 @@ public class DoctorController {
         return degreeRepository.save(degree);
 
     }
-
+    
     @CrossOrigin
     @PostMapping("/login")
     public ResponseEntity<String>
@@ -74,7 +77,9 @@ public class DoctorController {
         if(doctorService.doctorExists(emailPassword.getEmail())
                 .equals(Boolean.FALSE))
             return ResponseEntity.notFound().build();
-
+        if(!doctorRepository.findByDoctorEmailEquals(emailPassword.getEmail())
+            .getDoctorPassword().equals(emailPassword.getPassword()))
+            return ResponseEntity.notFound().build();
         return ResponseEntity.accepted().body(doctorService
                 .doctorLogin(emailPassword.getEmail(),
                         emailPassword.getPassword()));
@@ -82,8 +87,13 @@ public class DoctorController {
 
     @CrossOrigin
     @PostMapping("/signup")
-    public ResponseEntity<Doctor> doctorSignup(@RequestBody Doctor doctor){
-        return doctorService.doctorSignup(doctor);
+    public ResponseEntity<String> doctorSignup(@RequestBody Doctor doctor){
+        return 
+        ResponseEntity.accepted().body(doctorService
+                .doctorLogin(doctorService.doctorSignup(doctor).getBody().getDoctorEmail(),
+                doctorService.doctorSignup(doctor).getBody().getDoctorPassword()
+            ));
+        
     }
 
     @CrossOrigin
@@ -92,15 +102,7 @@ public class DoctorController {
         return doctorService.consultationCount(doctorId);
     }
 
-    @CrossOrigin
-    @PostMapping("/imageUpload/{id}")
-    Integer uploadDoctorImage(@RequestParam MultipartFile multipartImage
-            , @PathVariable Integer doctorId) throws Exception {
-        Doctor doctor = doctorRepository.findByDoctorIDEquals(doctorId);
-        doctor.setDoctorImage(multipartImage.getBytes());
-
-        return doctorRepository.save(doctor).getDoctorID();
-    }
+  
 
 }
 

@@ -34,8 +34,8 @@ public class Doctor {
     private String doctorClinicName;
 
     private String doctorInfo;
-    @Lob
-    private byte[] doctorImage;
+    
+    private String imageUUID;
 
     private Integer doctorConsultencyCount;
     private Integer doctorExperience;
@@ -46,13 +46,7 @@ public class Doctor {
 
     private String doctorLocation;
 
-    public byte[] getDoctorImage() {
-        return doctorImage;
-    }
-
-    public void setDoctorImage(byte[] doctorImage) {
-        this.doctorImage = doctorImage;
-    }
+   
 
 
     public String getDoctorLocation() {
@@ -202,6 +196,14 @@ public class Doctor {
 
     public void setDoctorConsultencyCount(Integer doctorConsultencyCount) {
         this.doctorConsultencyCount = doctorConsultencyCount;
+    }
+
+    public String getImageUUID() {
+        return imageUUID;
+    }
+
+    public void setImageUUID(String imageUUID) {
+        this.imageUUID = imageUUID;
     }
 
 }
