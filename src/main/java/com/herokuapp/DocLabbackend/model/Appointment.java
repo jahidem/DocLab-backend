@@ -21,8 +21,16 @@ public class Appointment {
 
     private Integer patientId;
 
+    @Temporal(TemporalType.DATE)
+    private Date appointmentDate;
 
-    private Date appointmentTime;
+
+    @Temporal(TemporalType.TIME)
+    private  Date appointmentSlotStartTime;
+
+
+    @Temporal(TemporalType.TIME)
+    private  Date appointmentSlotEndTime;
 
     public String getAppointmentLabLocation() {
         return appointmentLabLocation;
@@ -40,13 +48,7 @@ public class Appointment {
         this.appointmentAccepted = appointmentAccepted;
     }
 
-    public Date getAppointmentTime() {
-        return appointmentTime;
-    }
 
-    public void setAppointmentTime(Date appointmentTime) {
-        this.appointmentTime = appointmentTime;
-    }
 
     public Integer getAppointmentId() {
         return appointmentId;
@@ -72,4 +74,27 @@ public class Appointment {
         this.patientId = patientId;
     }
 
+    public Date getAppointmentDate() {
+        return appointmentDate;
+    }
+
+    public void setAppointmentDate(Date appointmentDate) {
+        this.appointmentDate = appointmentDate;
+    }
+
+    public Date getAppointmentSlotStartTime() {
+        return appointmentSlotStartTime;
+    }
+
+    public void setAppointmentSlotStartTime(Date appointmentSlotStartTime) {
+        this.appointmentSlotStartTime = appointmentSlotStartTime;
+    }
+
+    public Date getAppointmentSlotEndTime() {
+        return appointmentSlotEndTime;
+    }
+
+    public void setAppointmentSlotEndTime(Date appointmentSlotEndTime) {
+        this.appointmentSlotEndTime = appointmentSlotEndTime;
+    }
 }

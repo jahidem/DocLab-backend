@@ -13,6 +13,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment,Integer
 
     List<Appointment> findByPatientIdEquals(@NonNull Integer patientId);
 
+    Boolean existsByDoctorIdEqualsAndPatientIdEquals(@NonNull Integer doctorId,@NonNull Integer patientId);
+
+
 
 
 

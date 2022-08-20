@@ -2,13 +2,16 @@ package com.herokuapp.DocLabbackend.controller;
 
 import com.herokuapp.DocLabbackend.model.Degree;
 import com.herokuapp.DocLabbackend.model.Doctor;
+import com.herokuapp.DocLabbackend.repository.AppointmentRepository;
 import com.herokuapp.DocLabbackend.repository.DegreeRepository;
 import com.herokuapp.DocLabbackend.repository.DoctorRepository;
 import com.herokuapp.DocLabbackend.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,6 +25,7 @@ public class DoctorController {
     @Autowired
     DoctorRepository doctorRepository;
 
+    
     @Autowired
     DegreeRepository degreeRepository;
 
@@ -61,11 +65,13 @@ public class DoctorController {
         Degree degree = degreeRepository.findById(degreeId).get();
         Doctor doctor = doctorRepository.findById(doctorId).get();
 
+
+
         degree.addDoctor(doctor);
         return degreeRepository.save(degree);
 
     }
-
+    
     @CrossOrigin
     @PostMapping("/login")
     public ResponseEntity<String>
@@ -73,7 +79,9 @@ public class DoctorController {
         if(doctorService.doctorExists(emailPassword.getEmail())
                 .equals(Boolean.FALSE))
             return ResponseEntity.notFound().build();
-
+        if(!doctorRepository.findByDoctorEmailEquals(emailPassword.getEmail())
+            .getDoctorPassword().equals(emailPassword.getPassword()))
+            return ResponseEntity.notFound().build();
         return ResponseEntity.accepted().body(doctorService
                 .doctorLogin(emailPassword.getEmail(),
                         emailPassword.getPassword()));
@@ -81,8 +89,13 @@ public class DoctorController {
 
     @CrossOrigin
     @PostMapping("/signup")
-    public ResponseEntity<Doctor> doctorSignup(@RequestBody Doctor doctor){
-        return doctorService.doctorSignup(doctor);
+    public ResponseEntity<String> doctorSignup(@RequestBody Doctor doctor){
+        return 
+        ResponseEntity.accepted().body(doctorService
+                .doctorLogin(doctorService.doctorSignup(doctor).getBody().getDoctorEmail(),
+                doctorService.doctorSignup(doctor).getBody().getDoctorPassword()
+            ));
+        
     }
 
     @CrossOrigin
@@ -90,6 +103,8 @@ public class DoctorController {
     public Integer uniqueConsultCount(@PathVariable("id") Integer doctorId){
         return doctorService.consultationCount(doctorId);
     }
+
+  
 
 }
 

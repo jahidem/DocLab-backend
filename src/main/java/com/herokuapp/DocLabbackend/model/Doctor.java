@@ -19,8 +19,8 @@ public class Doctor {
     @Column (name = "DOCTOR_GENDER")
     private String doctorGender;
 
-    @Column(name = "DOCTOR_DISTRICT")
-    private String doctorDistrict;
+    @Column(name = "DOCTOR_SUB_DISTRICT")
+    private String doctorSubDistrict;
 
     @Column(name = "DOCTOR_SPECIALITY")
     private String doctorSpeciality;
@@ -30,10 +30,15 @@ public class Doctor {
 
     @ManyToMany(mappedBy = "doctorSet")
     private Set<Degree> doctorDegrees = new HashSet<>();
-    public float doctorRating;
-    public String doctorClinicName;
-    public String doctorInfo;
-    public Integer doctorExperience;
+    private Float doctorRating;
+    private String doctorClinicName;
+
+    private String doctorInfo;
+    
+    private String imageUUID;
+
+    private Integer doctorConsultencyCount;
+    private Integer doctorExperience;
 
     private  String doctorEmail;
     private String doctorPassword;
@@ -41,14 +46,17 @@ public class Doctor {
 
     private String doctorLocation;
 
+   
 
-    public float getDoctorRating() {
-        return doctorRating;
+
+    public String getDoctorLocation() {
+        return doctorLocation;
     }
 
-    public void setDoctorRating(float doctorRating) {
-        this.doctorRating = doctorRating;
+    public void setDoctorLocation(String doctorLocation) {
+        this.doctorLocation = doctorLocation;
     }
+
 
     public String getDoctorClinicName() {
         return doctorClinicName;
@@ -125,13 +133,7 @@ public class Doctor {
         this.doctorName = doctorName;
     }
 
-    public String getDoctorLcation() {
-        return doctorLocation;
-    }
 
-    public void setDoctorLcation(String doctorLcation) {
-        this.doctorLocation = doctorLcation;
-    }
 
     public Integer getDoctorID() {
         return doctorID;
@@ -149,12 +151,12 @@ public class Doctor {
         this.doctorName = doctorName;
     }
 
-    public String getDoctorDistrict() {
-        return doctorDistrict;
+    public String getDoctorSubDistrict() {
+        return doctorSubDistrict;
     }
 
-    public void setDoctorDistrict(String doctorDistrict) {
-        this.doctorDistrict = doctorDistrict;
+    public void setDoctorSubDistrict(String doctorDistrict) {
+        this.doctorSubDistrict = doctorDistrict;
     }
     public String getDoctorSpeciality() {
         return doctorSpeciality;
@@ -172,6 +174,14 @@ public class Doctor {
 
     }
 
+    public Float getDoctorRating() {
+        return doctorRating;
+    }
+
+    public void setDoctorRating(Float doctorRating) {
+        this.doctorRating = doctorRating;
+    }
+
     public String getDoctorInfo() {
         return doctorInfo;
     }
@@ -179,4 +189,21 @@ public class Doctor {
     public void setDoctorInfo(String doctorInfo) {
         this.doctorInfo = doctorInfo;
     }
+
+    public Integer getDoctorConsultencyCount() {
+        return doctorConsultencyCount;
+    }
+
+    public void setDoctorConsultencyCount(Integer doctorConsultencyCount) {
+        this.doctorConsultencyCount = doctorConsultencyCount;
+    }
+
+    public String getImageUUID() {
+        return imageUUID;
+    }
+
+    public void setImageUUID(String imageUUID) {
+        this.imageUUID = imageUUID;
+    }
+
 }

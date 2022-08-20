@@ -2,7 +2,11 @@ package com.herokuapp.DocLabbackend.controller;
 
 
 import com.herokuapp.DocLabbackend.model.Appointment;
+import com.herokuapp.DocLabbackend.model.Doctor;
 import com.herokuapp.DocLabbackend.repository.AppointmentRepository;
+import com.herokuapp.DocLabbackend.repository.DoctorRepository;
+import com.herokuapp.DocLabbackend.service.DoctorService;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +18,8 @@ public class AppointmentController {
     @Autowired
     AppointmentRepository appointmentRepository;
 
+    @Autowired
+    DoctorRepository doctorRepository;
 
     @CrossOrigin
     @GetMapping("")
@@ -26,7 +32,13 @@ public class AppointmentController {
     public void addAppointment(
             @RequestBody Appointment appointment
     ){
-
+        if(appointmentRepository.existsByDoctorIdEqualsAndPatientIdEquals(appointment.getDoctorId(),
+                appointment.getPatientId()).equals(Boolean.FALSE))
+        {
+            Doctor doctor = doctorRepository.findByDoctorIDEquals(appointment.getDoctorId());
+            doctor.setDoctorConsultencyCount(doctor.getDoctorConsultencyCount()+1);
+            doctorRepository.save(doctor);
+        }
         appointmentRepository.save(appointment);
 
     }
