@@ -2,7 +2,6 @@ package com.herokuapp.DocLabbackend.controller;
 
 import com.herokuapp.DocLabbackend.model.Degree;
 import com.herokuapp.DocLabbackend.model.Doctor;
-import com.herokuapp.DocLabbackend.repository.AppointmentRepository;
 import com.herokuapp.DocLabbackend.repository.DegreeRepository;
 import com.herokuapp.DocLabbackend.repository.DoctorRepository;
 import com.herokuapp.DocLabbackend.service.DoctorService;
@@ -11,10 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/doctor")

@@ -5,8 +5,6 @@ import com.herokuapp.DocLabbackend.model.Appointment;
 import com.herokuapp.DocLabbackend.model.Doctor;
 import com.herokuapp.DocLabbackend.repository.AppointmentRepository;
 import com.herokuapp.DocLabbackend.repository.DoctorRepository;
-import com.herokuapp.DocLabbackend.service.DoctorService;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
