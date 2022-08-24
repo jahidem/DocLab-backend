@@ -1,31 +1,23 @@
 package com.herokuapp.DocLabbackend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "DOCTOR")
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer doctorID;
 
-    @Column(name = "DOCTOR_NAME")
     private String doctorName;
 
-    @Column (name = "DOCTOR_GENDER")
     private String doctorGender;
 
-    @Column(name = "DOCTOR_SUB_DISTRICT")
     private String doctorSubDistrict;
 
-    @Column(name = "DOCTOR_SPECIALITY")
     private String doctorSpeciality;
 
-    @Column(name = "DOCTOR_VISITING_FEE")
     private Integer doctorVisitingFee;
 
     @ManyToMany(mappedBy = "doctorSet")

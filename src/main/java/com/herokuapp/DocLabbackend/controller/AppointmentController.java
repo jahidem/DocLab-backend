@@ -1,6 +1,5 @@
 package com.herokuapp.DocLabbackend.controller;
 
-
 import com.herokuapp.DocLabbackend.model.Appointment;
 import com.herokuapp.DocLabbackend.model.Doctor;
 import com.herokuapp.DocLabbackend.repository.AppointmentRepository;

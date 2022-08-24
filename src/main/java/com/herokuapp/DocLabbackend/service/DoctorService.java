@@ -39,19 +39,19 @@ public class DoctorService {
     public ResponseEntity<Doctor> findDoctorById(Integer doctorId){
 
         if(doctorRepository.existsById(doctorId)){
-            return  new ResponseEntity(
+            return  new ResponseEntity<>(
                     doctorRepository.findByDoctorIDEquals(doctorId)
                     , HttpStatus.OK);
         }
-        return  new ResponseEntity(HttpStatus.NO_CONTENT);
+        return  new ResponseEntity<>(null,HttpStatus.NO_CONTENT);
     }
 
     public ResponseEntity<Integer> deleteDoctorById(Integer doctorId){
         if(doctorRepository.existsById(doctorId)){
             doctorRepository.deleteById(doctorId);
-            return  new ResponseEntity(doctorId, HttpStatus.OK);
+            return  new ResponseEntity<>(doctorId, HttpStatus.OK);
         }
-        return  new ResponseEntity(doctorId,HttpStatus.NO_CONTENT);
+        return  new ResponseEntity<>(doctorId,HttpStatus.NO_CONTENT);
 
     }
 
@@ -86,7 +86,7 @@ public class DoctorService {
     public Integer consultationCount(Integer doctorId){
         List<Appointment> allAppointmets = appointmentRepository.findByDoctorIdEquals(doctorId);
         Map<Integer,Integer> mp =new HashMap<Integer,Integer>();
-        Integer uniqueConsultCount = new Integer(0);
+        Integer uniqueConsultCount = Integer.valueOf(0);
         for (Appointment appointment:allAppointmets) {
             if (!mp.containsKey(appointment.getPatientId()) && appointment.getAppointmentAccepted().equals(Boolean.TRUE)){
                 mp.put(appointment.getPatientId(), 1);

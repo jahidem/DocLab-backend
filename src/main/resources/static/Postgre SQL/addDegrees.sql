@@ -40,3 +40,4 @@ insert
 
 
 select * from "degree"  ;
+delete  from "degree" where "name" = 'MBBS'

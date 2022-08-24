@@ -3,7 +3,6 @@ package com.herokuapp.DocLabbackend.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.print.Doc;
 import java.util.HashSet;
 import java.util.Set;
 

@@ -1,6 +1,5 @@
 package com.herokuapp.DocLabbackend.service;
 
-import com.herokuapp.DocLabbackend.model.Doctor;
 import com.herokuapp.DocLabbackend.model.Patient;
 import com.herokuapp.DocLabbackend.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,17 +1,13 @@
 package com.herokuapp.DocLabbackend.controller;
 
 import com.herokuapp.DocLabbackend.model.Degree;
-import com.herokuapp.DocLabbackend.model.Doctor;co
+import com.herokuapp.DocLabbackend.model.Doctor;
 import com.herokuapp.DocLabbackend.repository.DegreeRepository;
 import com.herokuapp.DocLabbackend.repository.DoctorRepository;
 import com.herokuapp.DocLabbackend.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.awt.*;
-import java.util.HashSet;
 import java.util.List;
 
 @RestController
@@ -77,12 +73,12 @@ public class DoctorController {
         if(doctorService.doctorExists(emailPassword.getEmail())
                 .equals(Boolean.FALSE))
             return ResponseEntity.notFound().build();
-        if(!doctorRepository.findByDoctorEmailEquals(emailPassword.getEmail())
+        if(doctorRepository.findByDoctorEmailEquals(emailPassword.getEmail())
             .getDoctorPassword().equals(emailPassword.getPassword()))
-            return ResponseEntity.notFound().build();
-        return ResponseEntity.accepted().body(doctorService
-                .doctorLogin(emailPassword.getEmail(),
-                        emailPassword.getPassword()));
+            return ResponseEntity.accepted().body(doctorService
+                  .doctorLogin(emailPassword.getEmail(),
+                         emailPassword.getPassword()));
+        return ResponseEntity.notFound().build();
     }
 
     @CrossOrigin
