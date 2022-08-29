@@ -1,201 +1,61 @@
 package com.herokuapp.DocLabbackend.model;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer doctorID;
 
+    @Column(nullable = false)
     private String doctorName;
 
+    @Column(nullable = false)
     private String doctorGender;
 
+    @Column(nullable = false)
     private String doctorSubDistrict;
 
+    @Column(nullable = false)
     private String doctorSpeciality;
 
     private Integer doctorVisitingFee;
 
-    @ManyToMany(mappedBy = "doctorSet")
-    private Set<Degree> doctorDegrees = new HashSet<>();
     private Float doctorRating;
+
+    @Column(nullable = false)
     private String doctorClinicName;
 
     private String doctorInfo;
-    
+
     private String imageUUID;
 
     private Integer doctorConsultencyCount;
     private Integer doctorExperience;
 
-    private  String doctorEmail;
-    private String doctorPassword;
-    private  String token;
-
+    @Column(nullable = false)
     private String doctorLocation;
 
-   
+    @JsonIgnore
+    @OneToOne(mappedBy = "authDoctor")
+    private Auth doctorAuth;
 
+    @ManyToMany(mappedBy = "doctorSet")
+    private Set<Degree> doctorDegrees = new HashSet<>();
 
-    public String getDoctorLocation() {
-        return doctorLocation;
-    }
+    public void minify() {
 
-    public void setDoctorLocation(String doctorLocation) {
-        this.doctorLocation = doctorLocation;
-    }
-
-
-    public String getDoctorClinicName() {
-        return doctorClinicName;
-    }
-
-    public void setDoctorClinicName(String doctorClinicName) {
-        this.doctorClinicName = doctorClinicName;
-    }
-
-    public Integer getDoctorExperience() {
-        return doctorExperience;
-    }
-
-    public void setDoctorExperience(Integer doctorExperience) {
-        this.doctorExperience = doctorExperience;
-    }
-
-
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getDoctorEmail() {
-        return doctorEmail;
-    }
-
-    public void setDoctorEmail(String doctorEmail) {
-        this.doctorEmail = doctorEmail;
-    }
-
-    public String getDoctorPassword() {
-        return doctorPassword;
-    }
-
-    public void setDoctorPassword(String doctorPassword) {
-        this.doctorPassword = doctorPassword;
-    }
-
-    public Set<Degree> getDoctorDegrees() {
-        return doctorDegrees;
-    }
-
-    public void setDoctorDegrees(Set<Degree> doctorDegrees) {
-        this.doctorDegrees = doctorDegrees;
-    }
-
-    public String getDoctorGender() {
-        return doctorGender;
-    }
-
-    public void setDoctorGender(String doctorGender) {
-        this.doctorGender = doctorGender;
-    }
-
-    public Integer getDoctorVisitingFee() {
-        return doctorVisitingFee;
-    }
-
-
-    public void setDoctorVisitingFee(Integer doctorVisitingFee) {
-        this.doctorVisitingFee = doctorVisitingFee;
-    }
-
-    public Doctor() {
-    }
-
-    public Doctor(String doctorName) {
-
-        this.doctorName = doctorName;
-    }
-
-
-
-    public Integer getDoctorID() {
-        return doctorID;
-    }
-
-    public String getDoctorName() {
-        return doctorName;
-    }
-
-    public void setDoctorID(Integer doctorID) {
-        this.doctorID = doctorID;
-    }
-
-    public void setDoctorName(String doctorName) {
-        this.doctorName = doctorName;
-    }
-
-    public String getDoctorSubDistrict() {
-        return doctorSubDistrict;
-    }
-
-    public void setDoctorSubDistrict(String doctorDistrict) {
-        this.doctorSubDistrict = doctorDistrict;
-    }
-    public String getDoctorSpeciality() {
-        return doctorSpeciality;
-    }
-
-    public void setDoctorSpeciality(String doctorSpeciality) {
-        this.doctorSpeciality = doctorSpeciality;
-    }
-
-    public  void minify(){
-        this.token = null;
-        //this.doctorID = null;
-        //this.doctorEmail = null;
-        this.doctorPassword = null;
-
-    }
-
-    public Float getDoctorRating() {
-        return doctorRating;
-    }
-
-    public void setDoctorRating(Float doctorRating) {
-        this.doctorRating = doctorRating;
-    }
-
-    public String getDoctorInfo() {
-        return doctorInfo;
-    }
-
-    public void setDoctorInfo(String doctorInfo) {
-        this.doctorInfo = doctorInfo;
-    }
-
-    public Integer getDoctorConsultencyCount() {
-        return doctorConsultencyCount;
-    }
-
-    public void setDoctorConsultencyCount(Integer doctorConsultencyCount) {
-        this.doctorConsultencyCount = doctorConsultencyCount;
-    }
-
-    public String getImageUUID() {
-        return imageUUID;
-    }
-
-    public void setImageUUID(String imageUUID) {
-        this.imageUUID = imageUUID;
     }
 
 }

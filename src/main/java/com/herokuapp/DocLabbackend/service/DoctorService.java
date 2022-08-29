@@ -1,8 +1,9 @@
 package com.herokuapp.DocLabbackend.service;
 
-import com.herokuapp.DocLabbackend.model.Appointment;
+import com.herokuapp.DocLabbackend.model.Auth;
 import com.herokuapp.DocLabbackend.model.Doctor;
 import com.herokuapp.DocLabbackend.repository.AppointmentRepository;
+import com.herokuapp.DocLabbackend.repository.AuthRepository;
 import com.herokuapp.DocLabbackend.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,8 +18,10 @@ public class DoctorService {
     @Autowired
     private DoctorRepository doctorRepository;
 
+   
+
     @Autowired
-    private AppointmentRepository appointmentRepository;
+    private AuthRepository authRepository;
 
     public void createDoctor(Doctor doctor){
 
@@ -55,45 +58,23 @@ public class DoctorService {
 
     }
 
-    public String doctorLogin(String email,String password){
-        Doctor doctor = doctorRepository.findByDoctorEmailEquals(email);
-        String token = UUID.randomUUID().toString();
-        doctor.setToken(token);
-        doctorRepository.save(doctor);
-        return token;
-    }
-
-    public  Boolean doctorExists(String email){
-        return  doctorRepository.existsByDoctorEmailEquals(email);
-    }
-
-    public ResponseEntity<Doctor> doctorSignup(Doctor doctor){
-        if(doctorRepository.existsByDoctorEmailEquals(doctor.getDoctorEmail())
-                .equals(Boolean.TRUE))
-            return ResponseEntity.badRequest().body(doctor);
-
-        doctor.setToken(UUID.randomUUID().toString());
-        doctorRepository.save(doctor);
-        return ResponseEntity.ok().body(doctor);
-    }
-
-    public ResponseEntity<Doctor> findByToken(String token){
-
-        return  ResponseEntity.ok()
-                .body(doctorRepository.findByTokenEquals(token));
-    }
-
-    public Integer consultationCount(Integer doctorId){
-        List<Appointment> allAppointmets = appointmentRepository.findByDoctorIdEquals(doctorId);
-        Map<Integer,Integer> mp =new HashMap<Integer,Integer>();
-        Integer uniqueConsultCount = Integer.valueOf(0);
-        for (Appointment appointment:allAppointmets) {
-            if (!mp.containsKey(appointment.getPatientId()) && appointment.getAppointmentAccepted().equals(Boolean.TRUE)){
-                mp.put(appointment.getPatientId(), 1);
-                uniqueConsultCount++;
-            }
+    public Doctor findByToken(String token){
+        if(authRepository.existByToken(token)){
+            return doctorRepository.getDoctorFromToken(token);
         }
-        return uniqueConsultCount;
+        return null;
     }
+    public Doctor addDoctor(Doctor doctor, String token) {
+        if(authRepository.existByToken(token)){
+            Doctor svDoctor = doctorRepository.save(doctor);
+            Auth auth = authRepository.selectByToken(token);
+            auth.setAuthDoctor(svDoctor);
+            authRepository.save(auth);
+            return svDoctor;
+        }
+
+        return null;
+    }
+
 }
 
