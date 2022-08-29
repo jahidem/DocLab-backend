@@ -14,24 +14,6 @@ public class PatientController {
     PatientService patientService;
 
 
-
-    //////////////// Endpoints for DEV ///////////////
-    @CrossOrigin
-    @PostMapping(value = "/post")
-    public void addPatient(@RequestBody Patient patient){
-
-        patientService.createPatient(patient);
-    }
-
-    @CrossOrigin
-    @GetMapping("/{id}")
-    public Patient getPatient(@PathVariable("id") Integer patientId){
-        return patientService.getPatient(patientId);
-    }
-
-    ///////Endpoints for Deploy//////////
-
-
     @CrossOrigin
     @GetMapping(value = "")
     public ResponseEntity<List<Patient>> getAllPatients(){

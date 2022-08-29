@@ -28,29 +28,6 @@ public class DoctorController {
         return doctorService.getAllDoctor();
     }
 
-
-    // Endpoints For Dev////////////////////
-    @CrossOrigin
-    @GetMapping(value = "/id/{id}")
-    public ResponseEntity<Doctor> getDoctor(
-            @PathVariable("id") Integer doctorID) {
-        if (doctorRepository.existsById(doctorID)) {
-            return ResponseEntity.ok().body(
-                    doctorRepository.findByDoctorIDEquals(doctorID));
-        }
-
-        return ResponseEntity.notFound().build();
-    }
-
-    @CrossOrigin
-    @PostMapping(value = "/post")
-    public void addDoctor(@RequestBody Doctor doctor) {
-
-        doctorService.createDoctor(doctor);
-    }
-
-
-    // Endpoints for API with TOKEN////////////
     @CrossOrigin
     @PostMapping(value = "/add")
     public ResponseEntity<Doctor> addDoctor(@RequestBody Doctor doctor,

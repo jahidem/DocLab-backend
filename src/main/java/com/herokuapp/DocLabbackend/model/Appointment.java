@@ -29,16 +29,12 @@ public class Appointment {
     @Column(nullable = false)
     private Integer patientId;
 
-    @Temporal(TemporalType.DATE)
-    private Date appointmentDate;
+    @Temporal(TemporalType.TIME)
+    private  Date appointmentSlotStartTime = new Date();
 
 
     @Temporal(TemporalType.TIME)
-    private  Date appointmentSlotStartTime;
-
-
-    @Temporal(TemporalType.TIME)
-    private  Date appointmentSlotEndTime;
+    private  Date appointmentSlotEndTime = new Date();
 
     
 }

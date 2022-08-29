@@ -3,7 +3,6 @@ package com.herokuapp.DocLabbackend.service;
 import com.herokuapp.DocLabbackend.model.Auth;
 import com.herokuapp.DocLabbackend.model.Degree;
 import com.herokuapp.DocLabbackend.model.Doctor;
-import com.herokuapp.DocLabbackend.repository.AppointmentRepository;
 import com.herokuapp.DocLabbackend.repository.AuthRepository;
 import com.herokuapp.DocLabbackend.repository.DegreeRepository;
 import com.herokuapp.DocLabbackend.repository.DoctorRepository;
@@ -59,12 +58,6 @@ public class DoctorService {
 
     }
 
-    public Doctor findByToken(String token) {
-        if (authRepository.existByToken(token)) {
-            return doctorRepository.getDoctorFromToken(token);
-        }
-        return null;
-    }
 
     public Doctor addDoctor(Doctor doctor, String token) {
         if (authRepository.existByToken(token)) {
