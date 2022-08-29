@@ -21,8 +21,12 @@ public class Appointment {
     private String appointmentLabLocation;
 
     private Boolean appointmentAccepted=false;
+
+    @Column(nullable = false)
     private  Integer doctorId;
 
+    
+    @Column(nullable = false)
     private Integer patientId;
 
     @Temporal(TemporalType.DATE)

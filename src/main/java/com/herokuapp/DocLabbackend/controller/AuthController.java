@@ -23,7 +23,7 @@ public class AuthController {
   AuthService authService;
 
   @CrossOrigin
-  @PostMapping(value = "/{id}")
+  @PostMapping(value = "")
   public ResponseEntity<Auth> getAuth(@PathVariable("id") String toke,
   @RequestHeader("TOKEN") String token ){
     Auth auth = authService.getByToken(token);

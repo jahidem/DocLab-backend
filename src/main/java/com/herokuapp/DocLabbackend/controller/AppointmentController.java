@@ -5,6 +5,7 @@ import com.herokuapp.DocLabbackend.model.Doctor;
 import com.herokuapp.DocLabbackend.repository.AppointmentRepository;
 import com.herokuapp.DocLabbackend.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,41 +21,45 @@ public class AppointmentController {
 
     @CrossOrigin
     @GetMapping("")
-    public List<Appointment> getAllAppointments(){
+    public List<Appointment> getAllAppointments() {
         return appointmentRepository.findAll();
     }
 
     @CrossOrigin
-    @PostMapping(value = "/post")
-    public void addAppointment(
-            @RequestBody Appointment appointment
-    ){
-        if(appointmentRepository.existsByDoctorIdEqualsAndPatientIdEquals(appointment.getDoctorId(),
-                appointment.getPatientId()).equals(Boolean.FALSE))
-        {
+    @PostMapping(value = "")
+    public ResponseEntity<Appointment> addAppointment(
+            @RequestBody Appointment appointment) {
+        if (appointment.getDoctorId() == null ||
+                appointment.getPatientId() == null)
+            return ResponseEntity.notFound().build();
+
+        if (appointmentRepository.existsByDoctorIdEqualsAndPatientIdEquals(appointment.getDoctorId(),
+                appointment.getPatientId()).equals(Boolean.FALSE)) {
             Doctor doctor = doctorRepository.findByDoctorIDEquals(appointment.getDoctorId());
-            doctor.setDoctorConsultencyCount(doctor.getDoctorConsultencyCount()+1);
+            if (doctor.getDoctorConsultencyCount() != null)
+                doctor.setDoctorConsultencyCount(doctor.getDoctorConsultencyCount() + 1);
+            else
+                doctor.setDoctorConsultencyCount(Integer.valueOf(1));
             doctorRepository.save(doctor);
         }
-        appointmentRepository.save(appointment);
+
+        return ResponseEntity.ok(appointmentRepository.save(appointment));
 
     }
 
     @CrossOrigin
     @GetMapping(value = "/getByDoctor/{doctor}")
-    public List<Appointment> getAllAppointmentOfDoctor(
-            @PathVariable("doctor") Integer doctorId
-    ){
+    public ResponseEntity<List<Appointment>> getAllAppointmentOfDoctor(
+            @PathVariable("doctor") Integer doctorId) {
 
-        return  appointmentRepository.findByDoctorIdEquals(doctorId);
+        return ResponseEntity.ok(appointmentRepository.findByDoctorIdEquals(doctorId));
     }
 
     @CrossOrigin
     @GetMapping(value = "/getByPatient/{patientId}")
-    public List<Appointment> getAllAppointmentOfPatient(
-            @PathVariable("patientId") Integer patientId
-    ){
+    public ResponseEntity<List<Appointment>> getAllAppointmentOfPatient(
+            @PathVariable("patientId") Integer patientId) {
 
-        return  appointmentRepository.findByPatientIdEquals(patientId);
+        return ResponseEntity.ok(appointmentRepository.findByPatientIdEquals(patientId));
     }
 }

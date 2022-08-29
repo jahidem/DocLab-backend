@@ -1,6 +1,5 @@
 package com.herokuapp.DocLabbackend.controller;
 
-import com.herokuapp.DocLabbackend.model.Degree;
 import com.herokuapp.DocLabbackend.model.Doctor;
 import com.herokuapp.DocLabbackend.repository.DegreeRepository;
 import com.herokuapp.DocLabbackend.repository.DoctorRepository;
@@ -9,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+
 
 @RestController
 @RequestMapping(value = "/doctor")
@@ -28,10 +28,12 @@ public class DoctorController {
         return doctorService.getAllDoctor();
     }
 
+
+    // Endpoints For Dev////////////////////
     @CrossOrigin
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/id/{id}")
     public ResponseEntity<Doctor> getDoctor(
-            @PathVariable("token") Integer doctorID) {
+            @PathVariable("id") Integer doctorID) {
         if (doctorRepository.existsById(doctorID)) {
             return ResponseEntity.ok().body(
                     doctorRepository.findByDoctorIDEquals(doctorID));
@@ -47,34 +49,40 @@ public class DoctorController {
         doctorService.createDoctor(doctor);
     }
 
+
+    // Endpoints for API with TOKEN////////////
     @CrossOrigin
-    @PostMapping(value = "/addDoctor")
+    @PostMapping(value = "/add")
     public ResponseEntity<Doctor> addDoctor(@RequestBody Doctor doctor,
             @RequestHeader("TOKEN") String token) {
-        
-        Doctor reDoc = doctorService.addDoctor(doctor,token);
-                if(reDoc!=null)
-                return ResponseEntity.ok().body(reDoc);
+
+        Doctor reDoc = doctorService.addDoctor(doctor, token);
+        if (reDoc != null)
+            return ResponseEntity.ok().body(reDoc);
         return ResponseEntity.status(401).build();
     }
 
     @CrossOrigin
-    @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<Integer> deleteDoctor(
-            @PathVariable("id") Integer doctorId) {
-        return doctorService.deleteDoctorById(doctorId);
+    @DeleteMapping(value = "/delete")
+    public ResponseEntity<String> deleteDoctor(
+            @RequestHeader("TOKEN") String token) {
+        String res = doctorService.deleteDoctorByToken(token);
+        if(res!=null)
+            return ResponseEntity.ok().body(res);
+        return ResponseEntity.notFound().build();   
+                
     }
 
     @CrossOrigin
-    @PutMapping("/has/{doctorId}/{degreeId}")
-    public Degree doctorHasDegree(
-            @PathVariable("doctorId") Integer doctorId,
+    @PutMapping("/has/{degreeId}")
+    public ResponseEntity<Doctor> doctorHasDegree(
+            @RequestHeader("TOKEN") String token,
             @PathVariable("degreeId") Integer degreeId) {
-        Degree degree = degreeRepository.findById(degreeId).get();
-        Doctor doctor = doctorRepository.findById(doctorId).get();
-
-        degree.addDoctor(doctor);
-        return degreeRepository.save(degree);
+        Doctor doctor = doctorService.addDegreeToDoctor(token,degreeId);
+        if(doctor!=null)
+               return  ResponseEntity.ok().body(doctor);
+                
+        return ResponseEntity.notFound().build();
 
     }
 
