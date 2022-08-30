@@ -26,7 +26,7 @@ public class AppointmentController {
     }
 
     @CrossOrigin
-    @PostMapping(value = "")
+    @PostMapping(value = "/post")
     public ResponseEntity<Appointment> addAppointment(
             @RequestBody Appointment appointment) {
         if (appointment.getDoctorId() == null ||

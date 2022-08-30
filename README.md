@@ -1,38 +1,66 @@
 <img src="./logo2.png" alt="drawing" width="150"/> 
 
 ## DocLab-backend ! 
- >The backend API of the webapp DocLab.
+ >The REST API for the webapp Doclab.
 
-#### Descripson:
-This API provides access to the `Database` to the front end of
+#### Description:
+This API provides access to the Postgresql `Database` to the front end of
 frontend([DocLab-frontend](https://github.com/IIT-Project-Team/DocLab-frontend)) of this webapp.
+#### ER Diagram:
+This is the ER diagram of the database for this spring boot application.
+![image info](./erdiagram.png)
+
 #### APIs:
+###### For Auth
+* GET request to `/auth` with TOKEN in header gives the particular row from auth table in Json format.
+
+* POST request to `/auth/signup` with body `{
+  "authEmail": "mail@email.com",
+  "authPassword": "12345"
+  }`
+  creates this new auth and returns it.
+
+* POST request to `/auth/login` with object `{
+  "authEmail": "mail@email.com",
+  "authPassword": "12345"
+  }` generates a token and returns it.
+
 ###### For Doctor 
 * GET request to `/doctor` provide the list of all available
  doctors at the moment in Json format.
 
+* POST request to `/doctor/add` with `TOKEN` in header and doctor object (`{
+  "doctorName": "",
+  "doctorGender": "",
+  "doctorSubDistrict": "",
+  "doctorSpeciality": "",
+  "doctorEmail": "",
+  "doctorLocation": "",
+  "doctorClinicName": ""
+  }`)
+  in body adds the doctor to the auth account having the given token in the header.
 
-* GET request to `/doctor/{id}` gives info of the doctor
-  having the `id` in Json format.
+* DELETE request to `/doctor/delete` with `TOKEN` in header deletes if there's doctor attached to the auth account having the given token tn the header.
 
-* POST request to `/doctor/post` with attached body {"doctorName" : "Example Name"} adds new doctor to the database 
-named `Example Name`.
-* DELETE request to `/doctor/delete/{id}` deletes the doctor having the `id`, but returns `NO CONTENT(204)`
-if it doesn't exists.
+* PUT request to `/doctor/has/{degreeId}` with `TOKEN` in header add the particular degree having `degreeI`' to the doctor of the auth account having the `TOKEN` given in the header. 
 
 
 ###### For Patient
-* GET request to `/patient` provide the list of all available
-  doctors at the moment in Json format.
+* GET request to `/patient` provide the list of all
+  patients at the moment in Json format.
+
+* POST request to `/patient/add` with `TOKEN` in header and patient object (`{
+  "patientName" : "",
+  "patientGender": "",
+  "patientPhone" : "",
+  "patientSubDistrict" : ""
+}`)
+  in body adds the patient to the auth account having the given token in the header.
+
+* DELETE request to `/patient/delete` with `TOKEN` in header deletes if there's patient attached to the auth account having the given token tn the header.
 
 
-* GET request to `/patient/{id}` gives info of the patient
-  having the `id` in Json format.
-
-* POST request to `/patient/post` with body {"doctorName" : "Example name"} adds new doctor to the database with the given `doctotName`.
-
-
-###### For Appontment
+###### For Appointment
 * GET request to `/appointment` provide the list of all appointments at the moment in Json format.
 
 * GET request to `/appointment/getByDoctor/{id}` gives info of the Appointments for a doctor
@@ -48,8 +76,8 @@ if it doesn't exists.
   "appointmentAccepted": true,
   "doctorId": 3,
   "patientId": 1,
-  "appointmentTime": "2022-12-11T11:40:49.000+00:00"
+  "appointmentSlotStartTime": "2022-12-11T11:40:49.000+00:00",
+  "appointmentSlotEndTime" : "2022-12-11T11:40:49.000+00:00"
   }`
   add patient having id of `1` to the doctor having id of `3` for an appointment.
 
-* adds new doctor to the database with the given `doctotName`.
