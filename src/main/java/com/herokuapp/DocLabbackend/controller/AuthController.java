@@ -3,6 +3,7 @@ package com.herokuapp.DocLabbackend.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -20,7 +21,7 @@ public class AuthController {
   AuthService authService;
 
   @CrossOrigin
-  @PostMapping(value = "")
+  @GetMapping(value = "")
   public ResponseEntity<Auth> getAuth(  @RequestHeader("TOKEN") String token ){
     Auth auth = authService.getByToken(token);
     if(auth != null){
