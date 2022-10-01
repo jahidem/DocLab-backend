@@ -33,13 +33,24 @@ public class AuthController {
   
 
   @CrossOrigin
-  @PostMapping(value = "/login")
-  public ResponseEntity< String> loginAuth(@RequestBody Auth auth) {
-    String token = authService.loginAuth(auth);
+  @PostMapping(value = "/getToken")
+  public ResponseEntity< String> getToken(@RequestBody Auth auth) {
+    String token = authService.getToken(auth);
     if(token!=null)
         return ResponseEntity.ok().body(token);
     return ResponseEntity.notFound().build();
   }
+
+
+  @CrossOrigin
+  @PostMapping(value = "/login")
+  public ResponseEntity<Auth> loginAuth(@RequestBody Auth auth) {
+    Auth token = authService.loginAuth(auth);
+    if(token!=null)
+        return ResponseEntity.ok().body(token);
+    return ResponseEntity.notFound().build();
+  }
+
 
   @CrossOrigin
   @PostMapping(value = "/signup")

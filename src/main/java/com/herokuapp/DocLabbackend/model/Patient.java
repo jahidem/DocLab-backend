@@ -43,8 +43,11 @@ public class Patient {
 
     private String patientRBC;
 
+    private String patientImageUUID;
+
     @JsonIgnore
     @OneToOne(mappedBy = "authPatient")
     private Auth patientAuth;
+
 
 }

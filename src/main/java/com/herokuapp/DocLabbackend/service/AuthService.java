@@ -14,7 +14,19 @@ public class AuthService {
   @Autowired
   AuthRepository authRepository;
 
-  public String loginAuth(Auth auth) {
+  public Auth loginAuth(Auth auth) {
+    Auth auth2 = authRepository.selectByEmail(auth.getAuthEmail());
+    if (authRepository.existByEmail(auth.getAuthEmail())
+       && auth2.getAuthPassword().equals(auth.getAuthPassword())) {
+      String token = UUID.randomUUID().toString();
+      auth2.setAuthToken(token);
+      authRepository.save(auth2);
+      return auth2;
+    }
+    return null;
+  }
+
+  public String getToken(Auth auth) {
     Auth auth2 = authRepository.selectByEmail(auth.getAuthEmail());
     if (authRepository.existByEmail(auth.getAuthEmail())
        && auth2.getAuthPassword().equals(auth.getAuthPassword())) {

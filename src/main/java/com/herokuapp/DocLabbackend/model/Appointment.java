@@ -20,7 +20,7 @@ public class Appointment {
 
     private String appointmentLabLocation;
 
-    private Boolean appointmentAccepted=false;
+    private Boolean appointmentAccepted;
 
     @Column(nullable = false)
     private  Integer doctorId;
@@ -30,11 +30,17 @@ public class Appointment {
     private Integer patientId;
 
     @Temporal(TemporalType.TIME)
-    private  Date appointmentSlotStartTime = new Date();
+    private  Date appointmentSlotStartTime;
 
 
     @Temporal(TemporalType.TIME)
-    private  Date appointmentSlotEndTime = new Date();
+    private  Date appointmentSlotEndTime;
+
+    Appointment(){
+        this.appointmentAccepted = false;
+        this.appointmentSlotEndTime = new Date();
+        this.appointmentSlotEndTime = new Date();
+    }
 
     
 }

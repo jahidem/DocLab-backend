@@ -39,7 +39,7 @@ public class Doctor {
 
     private String doctorInfo;
 
-    private String imageUUID;
+    private String doctorImageUUID;
 
     private Integer doctorConsultencyCount;
     private Integer doctorExperience;
