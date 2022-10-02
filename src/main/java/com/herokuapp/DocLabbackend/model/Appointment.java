@@ -2,11 +2,10 @@ package com.herokuapp.DocLabbackend.model;
 
 
 import javax.persistence.*;
-
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
 
 @Entity
 @Getter
@@ -29,17 +28,15 @@ public class Appointment {
     @Column(nullable = false)
     private Integer patientId;
 
-    @Temporal(TemporalType.TIME)
-    private  Date appointmentSlotStartTime;
+    private  LocalDateTime appointmentSlotStartTime;
 
 
-    @Temporal(TemporalType.TIME)
-    private  Date appointmentSlotEndTime;
+    private  LocalDateTime appointmentSlotEndTime;
 
     Appointment(){
         this.appointmentAccepted = false;
-        this.appointmentSlotEndTime = new Date();
-        this.appointmentSlotEndTime = new Date();
+        this.appointmentSlotStartTime = LocalDateTime.now();
+        this.appointmentSlotEndTime = LocalDateTime.now();
     }
 
     

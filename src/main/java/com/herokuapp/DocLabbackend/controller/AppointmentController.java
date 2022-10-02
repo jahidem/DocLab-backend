@@ -15,8 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
-import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,11 +72,11 @@ public class AppointmentController {
     public ResponseEntity<List<PseudoPatient>> getAllPatientOfDoctor(
             @PathVariable("doctor") Integer doctorId) {
 
-        
         List<Appointment> arr = appointmentRepository.findByDoctorIdEquals(doctorId);
         List<PseudoPatient> ret = new ArrayList<PseudoPatient>();
         for (Appointment app : arr) {
-             ret.add(new PseudoPatient(app,patientService.getPatient(app.getPatientId())));
+            PseudoPatient pseudoPatient = new PseudoPatient(app, patientService.getPatient(app.getPatientId()));
+            ret.add(pseudoPatient);
         }
         return ResponseEntity.ok(ret);
     }
@@ -90,38 +89,53 @@ public class AppointmentController {
         return ResponseEntity.ok(appointmentRepository.findByPatientIdEquals(patientId));
     }
 
+    @CrossOrigin
+    @PutMapping(value = "/put/{appointmentId}")
+    public ResponseEntity<Integer> 
+    acceptAppointment(@PathVariable("appointmentId") Integer appointmentId) {
+        appointmentRepository.acceptAppointmentById(appointmentId);
+        return ResponseEntity.ok(appointmentId);
+    }
+
+    @CrossOrigin
+    @DeleteMapping(value = "/delete/{appointmentId}")
+    public ResponseEntity<Integer> 
+        deleteAppointment(@PathVariable("appointmentId") Integer appointmentId) {
+        appointmentRepository.deleteById(appointmentId);
+        return ResponseEntity.ok(appointmentId);
+    }
+
 
 }
-
 
 @Getter
 @Setter
 @NoArgsConstructor
-class PseudoPatient{
+class PseudoPatient {
+    private Integer appointmentId;
+
     private String patientName;
     private String patientAge;
     private String patientGender;
     private String patientImageUUID;
     private Boolean appointmentAccepted;
 
-    private  String appointmentDate;
-    private  String appointmentTime;
+    private String appointmentDate;
+    private String appointmentTime;
 
-    PseudoPatient(Appointment appointment, Patient patient){
+    PseudoPatient(Appointment appointment, Patient patient) {
         this.patientAge = patient.getPatientAge();
         this.patientGender = patient.getPatientGender();
         this.patientImageUUID = patient.getPatientImageUUID();
         this.patientName = patient.getPatientName();
-        
-        SimpleDateFormat date = 
-                new SimpleDateFormat ("E MMM dd yyyy");
-        SimpleDateFormat time =
-            new SimpleDateFormat("hh:mm a");
-      
+
+        DateTimeFormatter date = DateTimeFormatter.ofPattern("E MMM dd yyyy");
+        DateTimeFormatter time = DateTimeFormatter.ofPattern("hh:mm a");
+
         this.appointmentDate = date.format(appointment.getAppointmentSlotStartTime());
         this.appointmentTime = time.format(appointment.getAppointmentSlotStartTime());
         this.appointmentAccepted = appointment.getAppointmentAccepted();
+        this.appointmentId = appointment.getAppointmentId();
     }
-    
-    
+
 }
