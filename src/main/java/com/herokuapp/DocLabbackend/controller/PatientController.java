@@ -1,6 +1,4 @@
 package com.herokuapp.DocLabbackend.controller;
-
-import com.herokuapp.DocLabbackend.model.Doctor;
 import com.herokuapp.DocLabbackend.model.Patient;
 import com.herokuapp.DocLabbackend.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,45 +14,35 @@ public class PatientController {
     PatientService patientService;
 
 
-
-
     @CrossOrigin
     @GetMapping(value = "")
-    public List<Patient> getAllPatients(){
+    public ResponseEntity<List<Patient>> getAllPatients(){
 
-        return patientService.getAllPatient();
+        return ResponseEntity.ok().body( patientService.getAllPatient());
     }
 
     @CrossOrigin
-    @PostMapping(value = "/post")
-    public void addPatient(@RequestBody Patient patient){
+    @PostMapping(value = "/add")
+    public ResponseEntity<Patient> addPatient(@RequestBody Patient patient,
+            @RequestHeader("TOKEN") String token) {
 
-        patientService.createPatient(patient);
+        Patient rePat = patientService.addPatient(patient, token);
+        if (rePat != null)
+            return ResponseEntity.ok().body(rePat);
+        return ResponseEntity.status(401).build();
     }
 
     @CrossOrigin
-    @GetMapping("/{id}")
-    public Patient getPatient(@PathVariable("id") Integer patientId){
-        return patientService.getPatient(patientId);
+    @DeleteMapping(value = "/delete")
+    public ResponseEntity<String> deletePatient(
+            @RequestHeader("TOKEN") String token) {
+        String res = patientService.deletePatientByToken(token);
+        if(res!=null)
+           return ResponseEntity.ok().body(res);
+        return ResponseEntity.badRequest().build();   
+                
     }
 
-    @CrossOrigin
-    @PostMapping("/login")
-    public ResponseEntity<String>
-    patientLogin(@RequestBody EmailPassword emailPassword){
-        if(patientService.patientExists(emailPassword.getEmail())
-                .equals(Boolean.FALSE))
-            return ResponseEntity.notFound().build();
 
-        return ResponseEntity.ok().body(patientService
-                .patientLogin(emailPassword.getEmail(),
-                        emailPassword.getPassword()));
-    }
-
-    @CrossOrigin
-    @PostMapping("/signup")
-    public ResponseEntity<Patient> patientSignup(@RequestBody Patient patient){
-        return patientService.patientSignup(patient);
-    }
 
 }

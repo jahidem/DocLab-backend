@@ -1,20 +1,14 @@
 package com.herokuapp.DocLabbackend.controller;
 
-import com.herokuapp.DocLabbackend.model.Degree;
 import com.herokuapp.DocLabbackend.model.Doctor;
-import com.herokuapp.DocLabbackend.repository.AppointmentRepository;
 import com.herokuapp.DocLabbackend.repository.DegreeRepository;
 import com.herokuapp.DocLabbackend.repository.DoctorRepository;
 import com.herokuapp.DocLabbackend.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.awt.*;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 @RestController
 @RequestMapping(value = "/doctor")
@@ -25,107 +19,48 @@ public class DoctorController {
     @Autowired
     DoctorRepository doctorRepository;
 
-    
     @Autowired
     DegreeRepository degreeRepository;
 
     @CrossOrigin
     @GetMapping(value = "")
-    public List<Doctor> getAllDoctors(){
+    public List<Doctor> getAllDoctors() {
         return doctorService.getAllDoctor();
     }
 
     @CrossOrigin
-    @GetMapping(value = "/{token}")
-    public ResponseEntity<Doctor> getDoctor(
-            @PathVariable("token") String token){
-        return doctorService.findByToken(token);
+    @PostMapping(value = "/add")
+    public ResponseEntity<Doctor> addDoctor(@RequestBody Doctor doctor,
+            @RequestHeader("TOKEN") String token) {
+
+        Doctor reDoc = doctorService.addDoctor(doctor, token);
+        if (reDoc != null)
+            return ResponseEntity.ok().body(reDoc);
+        return ResponseEntity.status(401).build();
     }
 
     @CrossOrigin
-    @PostMapping(value = "/post")
-    public void addDoctor(@RequestBody Doctor doctor){
-
-        doctorService.createDoctor(doctor);
+    @DeleteMapping(value = "/delete")
+    public ResponseEntity<String> deleteDoctor(
+            @RequestHeader("TOKEN") String token) {
+        String res = doctorService.deleteDoctorByToken(token);
+        if(res!=null)
+            return ResponseEntity.ok().body(res);
+        return ResponseEntity.notFound().build();   
+                
     }
 
     @CrossOrigin
-    @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<Integer>  deleteDoctor(
-            @PathVariable("id") Integer doctorId){
-        return doctorService.deleteDoctorById(doctorId);
-    }
-
-    @CrossOrigin
-    @PutMapping("/has/{doctorId}/{degreeId}")
-    public Degree doctorHasDegree(
-            @PathVariable("doctorId") Integer doctorId,
-            @PathVariable("degreeId") Integer degreeId
-    ){
-        Degree degree = degreeRepository.findById(degreeId).get();
-        Doctor doctor = doctorRepository.findById(doctorId).get();
-
-
-
-        degree.addDoctor(doctor);
-        return degreeRepository.save(degree);
+    @PutMapping("/has/{degreeId}")
+    public ResponseEntity<Doctor> doctorHasDegree(
+            @RequestHeader("TOKEN") String token,
+            @PathVariable("degreeId") Integer degreeId) {
+        Doctor doctor = doctorService.addDegreeToDoctor(token,degreeId);
+        if(doctor!=null)
+               return  ResponseEntity.ok().body(doctor);
+                
+        return ResponseEntity.notFound().build();
 
     }
-    
-    @CrossOrigin
-    @PostMapping("/login")
-    public ResponseEntity<String>
-        doctorLogin(@RequestBody EmailPassword emailPassword){
-        if(doctorService.doctorExists(emailPassword.getEmail())
-                .equals(Boolean.FALSE))
-            return ResponseEntity.notFound().build();
-        if(!doctorRepository.findByDoctorEmailEquals(emailPassword.getEmail())
-            .getDoctorPassword().equals(emailPassword.getPassword()))
-            return ResponseEntity.notFound().build();
-        return ResponseEntity.accepted().body(doctorService
-                .doctorLogin(emailPassword.getEmail(),
-                        emailPassword.getPassword()));
-    }
 
-    @CrossOrigin
-    @PostMapping("/signup")
-    public ResponseEntity<String> doctorSignup(@RequestBody Doctor doctor){
-        return 
-        ResponseEntity.accepted().body(doctorService
-                .doctorLogin(doctorService.doctorSignup(doctor).getBody().getDoctorEmail(),
-                doctorService.doctorSignup(doctor).getBody().getDoctorPassword()
-            ));
-        
-    }
-
-    @CrossOrigin
-    @GetMapping("/uniqueConsultCount/{id}")
-    public Integer uniqueConsultCount(@PathVariable("id") Integer doctorId){
-        return doctorService.consultationCount(doctorId);
-    }
-
-  
-
-}
-
-
-class EmailPassword{
-    private String email;
-    private String password;
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }

@@ -39,4 +39,7 @@ insert
     values('MS');
 
 
-select * from "degree"  ;
+select * from doctor dd where dd.doctor_gender in (select d.doctor_gender  from doctor d where d.doctorid in (select d_d.doctor_id  from doctor_degrees d_d))  ;
+delete  from "degree" where "name" = 'MBBS';
+
+select * from auth a ;

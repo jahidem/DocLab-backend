@@ -89,4 +89,8 @@
     alter table doctor_degrees
        add constraint FK9k2p1b0d9c115mnir48v1syox
        foreign key (degree_id)
-       references degree
+       references DEGREE
+       
+       
+       
+update auth a set auth_token = 'lol' where a.auth_id = '4'

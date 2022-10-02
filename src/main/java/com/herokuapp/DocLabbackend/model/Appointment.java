@@ -2,11 +2,14 @@ package com.herokuapp.DocLabbackend.model;
 
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.Date;
 
 @Entity
-@Table(name = "APPOINTMENT")
+@Getter
+@Setter
 public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,85 +19,25 @@ public class Appointment {
 
     private String appointmentLabLocation;
 
-    private Boolean appointmentAccepted=false;
+    private Boolean appointmentAccepted;
+
+    @Column(nullable = false)
     private  Integer doctorId;
 
+    
+    @Column(nullable = false)
     private Integer patientId;
 
-    @Temporal(TemporalType.DATE)
-    private Date appointmentDate;
+    private  LocalDateTime appointmentSlotStartTime;
 
 
-    @Temporal(TemporalType.TIME)
-    private  Date appointmentSlotStartTime;
+    private  LocalDateTime appointmentSlotEndTime;
 
-
-    @Temporal(TemporalType.TIME)
-    private  Date appointmentSlotEndTime;
-
-    public String getAppointmentLabLocation() {
-        return appointmentLabLocation;
+    Appointment(){
+        this.appointmentAccepted = false;
+        this.appointmentSlotStartTime = LocalDateTime.now();
+        this.appointmentSlotEndTime = LocalDateTime.now();
     }
 
-    public void setAppointmentLabLocation(String appointmentLabLocation) {
-        this.appointmentLabLocation = appointmentLabLocation;
-    }
-
-    public Boolean getAppointmentAccepted() {
-        return appointmentAccepted;
-    }
-
-    public void setAppointmentAccepted(Boolean appointmentAccepted) {
-        this.appointmentAccepted = appointmentAccepted;
-    }
-
-
-
-    public Integer getAppointmentId() {
-        return appointmentId;
-    }
-
-    public void setAppointmentId(Integer appointmentId) {
-        this.appointmentId = appointmentId;
-    }
-
-    public Integer getDoctorId() {
-        return doctorId;
-    }
-
-    public void setDoctorId(Integer doctorId) {
-        this.doctorId = doctorId;
-    }
-
-    public Integer getPatientId() {
-        return patientId;
-    }
-
-    public void setPatientId(Integer patientId) {
-        this.patientId = patientId;
-    }
-
-    public Date getAppointmentDate() {
-        return appointmentDate;
-    }
-
-    public void setAppointmentDate(Date appointmentDate) {
-        this.appointmentDate = appointmentDate;
-    }
-
-    public Date getAppointmentSlotStartTime() {
-        return appointmentSlotStartTime;
-    }
-
-    public void setAppointmentSlotStartTime(Date appointmentSlotStartTime) {
-        this.appointmentSlotStartTime = appointmentSlotStartTime;
-    }
-
-    public Date getAppointmentSlotEndTime() {
-        return appointmentSlotEndTime;
-    }
-
-    public void setAppointmentSlotEndTime(Date appointmentSlotEndTime) {
-        this.appointmentSlotEndTime = appointmentSlotEndTime;
-    }
+    
 }

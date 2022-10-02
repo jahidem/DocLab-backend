@@ -1,86 +1,53 @@
 package com.herokuapp.DocLabbackend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
-@Table(name = "PATIENT")
+@Getter
+@Setter
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer patientId;
 
-    @Column(name = "PATIENT_NAME")
+    @Column(nullable = false)
     private String patientName;
 
-    @Column(name = "PHONE_NUMBER")
-    private String patientPhoneNumber;
+    private String patientAge;
 
-    @Column(name = "BILL")
-    private double patientBill;
+    @Column(nullable = false)
+    private String patientGender;
 
+    private String patientHeight;
 
+    private String patientWeight;
 
-    private String patientEmail;
-    private String patientPassword;
-    private  String token;
+    @Column(nullable = false)
+    private String patientPhone;
 
-    public String getToken() {
-        return token;
-    }
+    @Column(nullable = false)
+    private String patientSubDistrict;
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+    private String patientSystolicPressure;
 
-    public String getPatientEmail() {
-        return patientEmail;
-    }
+    private String patientDiastolicPressure;
 
-    public void setPatientEmail(String patientEmail) {
-        this.patientEmail = patientEmail;
-    }
+    private String patientGlucose;
 
-    public String getPatientPassword() {
-        return patientPassword;
-    }
+    private String patientHeartRate;
 
-    public void setPatientPassword(String patientPassword) {
-        this.patientPassword = patientPassword;
-    }
+    private String patientRBC;
 
-    public Integer getPatientId() {
-        return patientId;
-    }
+    private String patientImageUUID;
 
-    public void setPatientId(Integer patientId) {
-        this.patientId = patientId;
-    }
-
-    public String getPatientName() {
-        return patientName;
-    }
-
-    public void setPatientName(String patientName) {
-        this.patientName = patientName;
-    }
-
-    public String getPatientPhoneNumber() {
-        return patientPhoneNumber;
-    }
-
-    public void setPatientPhoneNumber(String patientPhoneNumber) {
-        this.patientPhoneNumber = patientPhoneNumber;
-    }
-
-    public double getPatientBill() {
-        return patientBill;
-    }
-
-    public void setPatientBill(double patientBill) {
-        this.patientBill = patientBill;
-    }
+    @JsonIgnore
+    @OneToOne(mappedBy = "authPatient")
+    private Auth patientAuth;
 
 
 }

@@ -1,52 +1,64 @@
 package com.herokuapp.DocLabbackend.service;
 
-import com.herokuapp.DocLabbackend.model.Doctor;
+import com.herokuapp.DocLabbackend.model.Auth;
 import com.herokuapp.DocLabbackend.model.Patient;
+import com.herokuapp.DocLabbackend.repository.AuthRepository;
 import com.herokuapp.DocLabbackend.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class PatientService {
     @Autowired
     private PatientRepository patientRepository;
 
-    public void createPatient(Patient patient){
+    @Autowired
+    private AuthRepository authRepository;
+
+    public void createPatient(Patient patient) {
         patientRepository.save(patient);
     }
 
-    public List<Patient> getAllPatient (){
-        return  patientRepository.findAll();
+    public List<Patient> getAllPatient() {
+        return patientRepository.getAllPatient();
     }
 
-    public  Patient getPatient(Integer patientId){
+    public Patient getPatient(Integer patientId) {
         return patientRepository.findById(patientId).get();
     }
 
-    public String patientLogin(String email,String password){
-        Patient patient = patientRepository.findByPatientEmailEquals(email);
-        String token = UUID.randomUUID().toString();
-        patient.setToken(token);
-        patientRepository.save(patient);
-        return token;
+    public Boolean patientExists(String email) {
+
+        return patientRepository.existsByPatientEmailEquals(email);
     }
 
-    public  Boolean patientExists(String email){
+    public Patient addPatient(Patient patient, String token) {
+        if (authRepository.existByToken(token)) {
+            Patient svPatient = patientRepository.save(patient);
+            Auth auth = authRepository.selectByToken(token);
+            auth.setAuthPatient(svPatient);
+            authRepository.save(auth);
+            return svPatient;
+        }
 
-        return  patientRepository.existsByPatientEmailEquals(email);
+        return null;
     }
 
-    public ResponseEntity<Patient> patientSignup(Patient patient){
-        if(patientRepository.existsByPatientEmailEquals(patient.getPatientEmail())
-                .equals(Boolean.TRUE))
-            return ResponseEntity.badRequest().body(patient);
+    public String deletePatientByToken(String token) {
+        if (authRepository.existByToken(token)) {
+            Auth auth = authRepository.selectByToken(token);
+            Patient patient = auth.getAuthPatient();
 
-        patient.setToken(UUID.randomUUID().toString());
-        patientRepository.save(patient);
-        return ResponseEntity.ok().body(patient);
+            auth.setAuthPatient(null);
+            authRepository.save(auth);
+            if (patient != null)
+                patientRepository.delete(patient);
+            else return null;
+            return token;
+        }
+        return null;
     }
+
 }
