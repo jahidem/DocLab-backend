@@ -45,11 +45,13 @@ public class AppointmentController {
     @CrossOrigin
     @PostMapping(value = "/post")
     public ResponseEntity<Appointment> addAppointment(
-            @RequestBody Appointment appointment) {
+            @RequestBody Appointment appointment,
+            @RequestHeader("TOKEN") String token) {
 
-        if (authRepository.existByToken(appointment.getPatientId().toString()))
+        if (token != null
+                && authRepository.existByToken(token))
             appointment.setPatientId(authRepository
-                    .selectByToken(appointment.getPatientId().toString())
+                    .selectByToken(token)
                     .getAuthPatient()
                     .getPatientId());
 
