@@ -4,7 +4,9 @@ import com.herokuapp.DocLabbackend.model.Appointment;
 import com.herokuapp.DocLabbackend.model.Doctor;
 import com.herokuapp.DocLabbackend.model.Patient;
 import com.herokuapp.DocLabbackend.repository.AppointmentRepository;
+import com.herokuapp.DocLabbackend.repository.AuthRepository;
 import com.herokuapp.DocLabbackend.repository.DoctorRepository;
+import com.herokuapp.DocLabbackend.service.AuthService;
 import com.herokuapp.DocLabbackend.service.PatientService;
 
 import lombok.Getter;
@@ -31,6 +33,9 @@ public class AppointmentController {
     @Autowired
     PatientService patientService;
 
+    @Autowired
+    AuthRepository authRepository;
+
     @CrossOrigin
     @GetMapping("")
     public List<Appointment> getAllAppointments() {
@@ -41,6 +46,13 @@ public class AppointmentController {
     @PostMapping(value = "/post")
     public ResponseEntity<Appointment> addAppointment(
             @RequestBody Appointment appointment) {
+
+        if (authRepository.existByToken(appointment.getPatientId().toString()))
+            appointment.setPatientId(authRepository
+                    .selectByToken(appointment.getPatientId().toString())
+                    .getAuthPatient()
+                    .getPatientId());
+
         if (appointment.getDoctorId() == null ||
                 appointment.getPatientId() == null)
             return ResponseEntity.notFound().build();
@@ -91,20 +103,17 @@ public class AppointmentController {
 
     @CrossOrigin
     @PutMapping(value = "/put/{appointmentId}")
-    public ResponseEntity<Integer> 
-    acceptAppointment(@PathVariable("appointmentId") Integer appointmentId) {
+    public ResponseEntity<Integer> acceptAppointment(@PathVariable("appointmentId") Integer appointmentId) {
         appointmentRepository.acceptAppointmentById(appointmentId);
         return ResponseEntity.ok(appointmentId);
     }
 
     @CrossOrigin
     @DeleteMapping(value = "/delete/{appointmentId}")
-    public ResponseEntity<Integer> 
-        deleteAppointment(@PathVariable("appointmentId") Integer appointmentId) {
+    public ResponseEntity<Integer> deleteAppointment(@PathVariable("appointmentId") Integer appointmentId) {
         appointmentRepository.deleteById(appointmentId);
         return ResponseEntity.ok(appointmentId);
     }
-
 
 }
 
