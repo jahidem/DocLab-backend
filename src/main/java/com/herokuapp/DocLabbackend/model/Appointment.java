@@ -28,15 +28,13 @@ public class Appointment {
     @Column(nullable = false)
     private Integer patientId;
 
-    private  LocalDateTime appointmentSlotStartTime;
+    private  LocalDateTime appointmentSlotDate;
 
-
-    private  LocalDateTime appointmentSlotEndTime;
+    private Integer appointmentSlotId;
 
     Appointment(){
         this.appointmentAccepted = false;
-        this.appointmentSlotStartTime = LocalDateTime.now();
-        this.appointmentSlotEndTime = LocalDateTime.now();
+        this.appointmentSlotDate = LocalDateTime.now();
     }
 
     

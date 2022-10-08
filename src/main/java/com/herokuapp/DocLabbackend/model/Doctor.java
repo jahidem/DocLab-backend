@@ -41,7 +41,7 @@ public class Doctor {
 
     private String doctorImageUUID;
 
-    private Integer doctorConsultencyCount=0;
+    private Integer doctorConsultancyCount=0;
     private Integer doctorExperience;
 
     @Column(nullable = false)

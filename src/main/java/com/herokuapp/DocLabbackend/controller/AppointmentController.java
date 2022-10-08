@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,10 +62,10 @@ public class AppointmentController {
         if (appointmentRepository.existsByDoctorIdEqualsAndPatientIdEquals(appointment.getDoctorId(),
                 appointment.getPatientId()).equals(Boolean.FALSE)) {
             Doctor doctor = doctorRepository.findByDoctorIDEquals(appointment.getDoctorId());
-            if (doctor.getDoctorConsultencyCount() != null)
-                doctor.setDoctorConsultencyCount(doctor.getDoctorConsultencyCount() + 1);
+            if (doctor.getDoctorConsultancyCount() != null)
+                doctor.setDoctorConsultancyCount(doctor.getDoctorConsultancyCount() + 1);
             else
-                doctor.setDoctorConsultencyCount(Integer.valueOf(1));
+                doctor.setDoctorConsultancyCount(Integer.valueOf(1));
             doctorRepository.save(doctor);
         }
 
@@ -131,8 +131,8 @@ class PseudoPatient {
     private String patientImageUUID;
     private Boolean appointmentAccepted;
 
-    private String appointmentDate;
-    private String appointmentTime;
+    private  LocalDateTime appointmentSlotDate;
+    private Integer appointmentSlotId;
 
     PseudoPatient(Appointment appointment, Patient patient) {
         this.patientAge = patient.getPatientAge();
@@ -140,11 +140,13 @@ class PseudoPatient {
         this.patientImageUUID = patient.getPatientImageUUID();
         this.patientName = patient.getPatientName();
 
-        DateTimeFormatter date = DateTimeFormatter.ofPattern("E MMM dd yyyy");
-        DateTimeFormatter time = DateTimeFormatter.ofPattern("hh:mm a");
+        // DateTimeFormatter date = DateTimeFormatter.ofPattern("E MMM dd yyyy");
+        // DateTimeFormatter time = DateTimeFormatter.ofPattern("hh:mm a");
 
-        this.appointmentDate = date.format(appointment.getAppointmentSlotStartTime());
-        this.appointmentTime = time.format(appointment.getAppointmentSlotStartTime());
+        // this.appointmentDate = date.format(appointment.getAppointmentSlotStartTime());
+        // this.appointmentTime = time.format(appointment.getAppointmentSlotStartTime());
+        this.appointmentSlotId = appointment.getAppointmentId();
+        this.appointmentSlotDate = appointment.getAppointmentSlotDate();
         this.appointmentAccepted = appointment.getAppointmentAccepted();
         this.appointmentId = appointment.getAppointmentId();
     }
