@@ -30,19 +30,23 @@ public class Doctor {
     @Column(nullable = false)
     private String doctorSpeciality;
 
-    private Integer doctorVisitingFee;
 
-    private Float doctorRating;
+    private Integer doctorVisitingFee = 1500;
+
+    private Float doctorRating = new Float("4.5");
 
     @Column(nullable = false)
     private String doctorClinicName;
-    @Column(length=200)
-    private String doctorInfo;
 
+    @Column(columnDefinition = "varchar(200)")
+    private String doctorInfo = "Life enrichment is about maintaining perfect physical, mental well-being in a balanced way to give us a sense of fulfillment. These words are the crux of my philosophy.";
+
+    @Column(nullable = false)
     private String doctorImageUUID;
 
-    private Integer doctorConsultancyCount=0;
-    private Integer doctorExperience;
+    private Integer doctorConsultancyCount = 0;
+
+    private Integer doctorExperience = 4;
 
     @Column(nullable = false)
     private String doctorLocation;
