@@ -18,14 +18,14 @@ public class Patient {
     @Column(nullable = false)
     private String patientName;
 
-    private String patientAge;
+    private String patientAge = "26";
 
     @Column(nullable = false)
     private String patientGender;
 
-    private String patientHeight;
+    private String patientHeight = "5";
 
-    private String patientWeight;
+    private String patientWeight="66";
 
     @Column(nullable = false)
     private String patientPhone;
@@ -33,16 +33,17 @@ public class Patient {
     @Column(nullable = false)
     private String patientSubDistrict;
 
-    private String patientSystolicPressure;
+    private String patientSystolicPressure = "124";
 
-    private String patientDiastolicPressure;
+    private String patientDiastolicPressure = "88";
 
-    private String patientGlucose;
+    private String patientGlucose="101";
 
-    private String patientHeartRate;
+    private String patientHeartRate="121";
+    
+    private String patientRBC="140";
 
-    private String patientRBC;
-
+    @Column(nullable = false)
     private String patientImageUUID;
 
     @JsonIgnore
