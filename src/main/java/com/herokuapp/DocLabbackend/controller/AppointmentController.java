@@ -4,7 +4,9 @@ import com.herokuapp.DocLabbackend.model.Appointment;
 import com.herokuapp.DocLabbackend.model.Doctor;
 import com.herokuapp.DocLabbackend.model.Patient;
 import com.herokuapp.DocLabbackend.repository.AppointmentRepository;
+import com.herokuapp.DocLabbackend.repository.AuthRepository;
 import com.herokuapp.DocLabbackend.repository.DoctorRepository;
+import com.herokuapp.DocLabbackend.service.AuthService;
 import com.herokuapp.DocLabbackend.service.PatientService;
 
 import lombok.Getter;
@@ -15,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,9 @@ public class AppointmentController {
     @Autowired
     PatientService patientService;
 
+    @Autowired
+    AuthRepository authRepository;
+
     @CrossOrigin
     @GetMapping("")
     public List<Appointment> getAllAppointments() {
@@ -40,7 +45,16 @@ public class AppointmentController {
     @CrossOrigin
     @PostMapping(value = "/post")
     public ResponseEntity<Appointment> addAppointment(
-            @RequestBody Appointment appointment) {
+            @RequestBody Appointment appointment,
+            @RequestHeader("TOKEN") String token) {
+
+        if (token != null
+                && authRepository.existByToken(token))
+            appointment.setPatientId(authRepository
+                    .selectByToken(token)
+                    .getAuthPatient()
+                    .getPatientId());
+
         if (appointment.getDoctorId() == null ||
                 appointment.getPatientId() == null)
             return ResponseEntity.notFound().build();
@@ -48,10 +62,10 @@ public class AppointmentController {
         if (appointmentRepository.existsByDoctorIdEqualsAndPatientIdEquals(appointment.getDoctorId(),
                 appointment.getPatientId()).equals(Boolean.FALSE)) {
             Doctor doctor = doctorRepository.findByDoctorIDEquals(appointment.getDoctorId());
-            if (doctor.getDoctorConsultencyCount() != null)
-                doctor.setDoctorConsultencyCount(doctor.getDoctorConsultencyCount() + 1);
+            if (doctor.getDoctorConsultancyCount() != null)
+                doctor.setDoctorConsultancyCount(doctor.getDoctorConsultancyCount() + 1);
             else
-                doctor.setDoctorConsultencyCount(Integer.valueOf(1));
+                doctor.setDoctorConsultancyCount(Integer.valueOf(1));
             doctorRepository.save(doctor);
         }
 
@@ -91,20 +105,17 @@ public class AppointmentController {
 
     @CrossOrigin
     @PutMapping(value = "/put/{appointmentId}")
-    public ResponseEntity<Integer> 
-    acceptAppointment(@PathVariable("appointmentId") Integer appointmentId) {
+    public ResponseEntity<Integer> acceptAppointment(@PathVariable("appointmentId") Integer appointmentId) {
         appointmentRepository.acceptAppointmentById(appointmentId);
         return ResponseEntity.ok(appointmentId);
     }
 
     @CrossOrigin
     @DeleteMapping(value = "/delete/{appointmentId}")
-    public ResponseEntity<Integer> 
-        deleteAppointment(@PathVariable("appointmentId") Integer appointmentId) {
+    public ResponseEntity<Integer> deleteAppointment(@PathVariable("appointmentId") Integer appointmentId) {
         appointmentRepository.deleteById(appointmentId);
         return ResponseEntity.ok(appointmentId);
     }
-
 
 }
 
@@ -120,8 +131,8 @@ class PseudoPatient {
     private String patientImageUUID;
     private Boolean appointmentAccepted;
 
-    private String appointmentDate;
-    private String appointmentTime;
+    private  LocalDateTime appointmentSlotDate;
+    private Integer appointmentSlotId;
 
     PseudoPatient(Appointment appointment, Patient patient) {
         this.patientAge = patient.getPatientAge();
@@ -129,11 +140,13 @@ class PseudoPatient {
         this.patientImageUUID = patient.getPatientImageUUID();
         this.patientName = patient.getPatientName();
 
-        DateTimeFormatter date = DateTimeFormatter.ofPattern("E MMM dd yyyy");
-        DateTimeFormatter time = DateTimeFormatter.ofPattern("hh:mm a");
+        // DateTimeFormatter date = DateTimeFormatter.ofPattern("E MMM dd yyyy");
+        // DateTimeFormatter time = DateTimeFormatter.ofPattern("hh:mm a");
 
-        this.appointmentDate = date.format(appointment.getAppointmentSlotStartTime());
-        this.appointmentTime = time.format(appointment.getAppointmentSlotStartTime());
+        // this.appointmentDate = date.format(appointment.getAppointmentSlotStartTime());
+        // this.appointmentTime = time.format(appointment.getAppointmentSlotStartTime());
+        this.appointmentSlotId = appointment.getAppointmentId();
+        this.appointmentSlotDate = appointment.getAppointmentSlotDate();
         this.appointmentAccepted = appointment.getAppointmentAccepted();
         this.appointmentId = appointment.getAppointmentId();
     }

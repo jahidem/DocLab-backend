@@ -53,7 +53,7 @@ public class AuthController {
 
 
   @CrossOrigin
-  @PostMapping(value = "/signup")
+  @PostMapping(value = "/signUp")
   public ResponseEntity<Auth> signupAuth(@RequestBody Auth auth){
     Auth auth2 = authService.signupAuth(auth);
     if(auth2!=null)

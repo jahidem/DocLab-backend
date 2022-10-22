@@ -36,12 +36,12 @@ public class Doctor {
 
     @Column(nullable = false)
     private String doctorClinicName;
-
+    @Column(length=200)
     private String doctorInfo;
 
     private String doctorImageUUID;
 
-    private Integer doctorConsultencyCount=0;
+    private Integer doctorConsultancyCount=0;
     private Integer doctorExperience;
 
     @Column(nullable = false)
