@@ -43,7 +43,7 @@ public class DoctorController {
     @PostMapping(value = "/update")
     public ResponseEntity<Doctor> updateDoctor(@RequestBody Doctor doctor) {
         doctorRepository.save(doctor);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(doctor);
     }
 
     @CrossOrigin
