@@ -40,6 +40,13 @@ public class DoctorController {
     }
 
     @CrossOrigin
+    @PostMapping(value = "/update")
+    public ResponseEntity<Doctor> updateDoctor(@RequestBody Doctor doctor) {
+        doctorRepository.save(doctor);
+        return ResponseEntity.ok().build();
+    }
+
+    @CrossOrigin
     @DeleteMapping(value = "/delete")
     public ResponseEntity<String> deleteDoctor(
             @RequestHeader("TOKEN") String token) {
