@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.e3dd771d.css",
+    "main.js": "/static/js/main.0df9f2e0.js",
+    "ucare-widget-chunk.js": "/static/js/ucare-widget-chunk.d49c540c.chunk.js",
+    "ucare-panel-chunk.js": "/static/js/ucare-panel-chunk.3f50f50e.chunk.js",
+    "static/js/273.39fde8c0.chunk.js": "/static/js/273.39fde8c0.chunk.js",
+    "static/media/blog-3.jpg": "/static/media/blog-3.3f796fbfc5c0cceb5584.jpg",
+    "static/media/blog-1.jpg": "/static/media/blog-1.f2041d7977650358a8cb.jpg",
+    "static/media/logo.png": "/static/media/logo.7adfac99b9d3c9d4d7fd.png",
+    "static/media/blog-2.jpg": "/static/media/blog-2.43f3cf436df805130894.jpg",
+    "static/media/avatar.png": "/static/media/avatar.072f0c9b61e186ba545e.png",
+    "index.html": "/index.html",
+    "main.e3dd771d.css.map": "/static/css/main.e3dd771d.css.map",
+    "main.0df9f2e0.js.map": "/static/js/main.0df9f2e0.js.map",
+    "ucare-widget-chunk.d49c540c.chunk.js.map": "/static/js/ucare-widget-chunk.d49c540c.chunk.js.map",
+    "ucare-panel-chunk.3f50f50e.chunk.js.map": "/static/js/ucare-panel-chunk.3f50f50e.chunk.js.map",
+    "273.39fde8c0.chunk.js.map": "/static/js/273.39fde8c0.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e3dd771d.css",
+    "static/js/main.0df9f2e0.js"
+  ]
+}
