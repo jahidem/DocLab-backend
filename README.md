@@ -6,6 +6,25 @@
 #### Description:
 This API provides access to the Postgresql `Database` to the front end of
 frontend([DocLab-frontend](https://github.com/IIT-Project-Team/DocLab-frontend)) of this webapp.
+
+
+### DocLab Backend
+
+To run the backend server in your local machine follow these instructions on your terminal:
+
+```bash
+# Clone the repository
+git clone https://github.com/jahidem/DocLab-backend.git
+# Go into the project folder
+cd DocLab-backend
+# Run the app
+mvn spring-boot:run
+```
+
+(open the url on your browser - http://localhost:8085)
+
+Note: Java Jdk and Maven needs to be installed to run the backend server.
+
 #### ER Diagram:
 This is the ER diagram of the database for this spring boot application.
 ![image info](./erdiagram.png)
