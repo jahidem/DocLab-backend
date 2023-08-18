@@ -9,8 +9,8 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.herokuapp</groupId>
-	<artifactId>DocLab-backend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>DocLab</artifactId>
+	<version>1.0.0</version>
 	<name>DocLab-backend</name>
 	<description>The back-end API for DocLab application</description>
 	<properties>
